@@ -10,11 +10,12 @@ type Meme struct {
 
 // Text defines text and it's associated styling and positioning, for a Meme.
 type Text struct {
-	X     uint16
-	Y     uint16
-	Width uint16
-	Text  string
-	Font  Font
+	X      uint16
+	Y      uint16
+	Width  uint16
+	Text   string
+	Font   Font
+	Stroke Stroke
 }
 
 // Font defines styling for Text.
@@ -22,4 +23,10 @@ type Font struct {
 	Family string
 	Size   uint8
 	Color  string
+}
+
+type Stroke struct {
+	Enabled bool
+	Size    uint8
+	Color   string
 }

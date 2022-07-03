@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image/png"
 	"os"
 	"strings"
@@ -11,8 +10,6 @@ import (
 )
 
 func main() {
-	fmt.Println(os.Args)
-
 	// constuct the service
 	svc, err := meme.NewService()
 	if err != nil {
@@ -29,11 +26,16 @@ func main() {
 				X:     10,
 				Y:     10,
 				Width: 580,
-				Text:  strings.ToUpper("Y'all Got Any More Of Them"),
+				Text:  strings.ToUpper("Y'all Got Any More Of Them Test Test Test Test"),
 				Font: meme.Font{
 					Family: "Impact",
 					Size:   40,
 					Color:  "#FFFFFF",
+				},
+				Stroke: meme.Stroke{
+					Enabled: true,
+					Size:    4,
+					Color:   "#000000",
 				},
 			},
 			{
@@ -45,6 +47,11 @@ func main() {
 					Family: "Impact",
 					Size:   40,
 					Color:  "#FFFFFF",
+				},
+				Stroke: meme.Stroke{
+					Enabled: true,
+					Size:    4,
+					Color:   "#000000",
 				},
 			},
 		},
