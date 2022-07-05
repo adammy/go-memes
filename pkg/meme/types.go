@@ -52,6 +52,9 @@ type TextStyle struct {
 
 	// The stroke/outline for the text.
 	Stroke *Stroke
+
+	// The rotation for the text.
+	Rotation *Rotation
 }
 
 // Font defines styling for Text.
@@ -73,4 +76,9 @@ type Stroke struct {
 
 	// The color of the text stroke as a hex code, including the prepending pound (#) (e.g., "#FFFFFF").
 	Color string
+}
+
+// Rotation defines the rotation for text.
+type Rotation struct {
+	Degrees int16
 }
