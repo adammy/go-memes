@@ -49,11 +49,11 @@ var (
 			Height:  756,
 			TextStyle: []TextStyle{
 				{
-					X:     50,
-					Y:     100,
+					X:     80,
+					Y:     110,
 					Width: 100,
 					Font: Font{
-						Family: "Impact",
+						Family: "Arial",
 						Size:   20,
 						Color:  "#000000",
 					},
@@ -62,17 +62,13 @@ var (
 					},
 				},
 				{
-					X:     240,
-					Y:     100,
+					X:     245,
+					Y:     80,
 					Width: 100,
 					Font: Font{
-						Family: "Impact",
+						Family: "Arial",
 						Size:   20,
 						Color:  "#000000",
-					},
-					Stroke: &Stroke{
-						Size:  2,
-						Color: "#FF0000",
 					},
 					Rotation: &Rotation{
 						Degrees: -10,

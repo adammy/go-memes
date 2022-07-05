@@ -3,6 +3,7 @@ package meme
 var (
 	// Mapping of font name to font path.
 	fonts = map[string]string{
+		"Arial":  "assets/fonts/arial.ttf",
 		"Impact": "assets/fonts/impact.ttf",
 	}
 
