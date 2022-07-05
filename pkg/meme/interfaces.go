@@ -4,32 +4,32 @@ import (
 	"io"
 )
 
-// ImageUploader defines the interface for an object that uploads an image.
-type ImageUploader interface {
+// imageUploader defines the interface for an object that uploads an image.
+type imageUploader interface {
 	// Upload pushes an image to some designated storage.
-	Upload(id string, w io.Writer) error
+	upload(id string, w io.Writer) error
 }
 
-// MemeRepository defines the interface for an object that stores memes.
-type MemeRepository interface {
-	// Get a meme from an ID.
-	Get(id string) (Meme, error)
+// memeRepository defines the interface for an object that stores memes.
+type memeRepository interface {
+	// get a meme from an ID.
+	get(id string) (Meme, error)
 
-	// Create a meme.
-	Create(meme *Meme) error
+	// create a meme.
+	create(meme *Meme) error
 
-	// Delete a meme from an ID.
-	Delete(id string) error
+	// delete a meme from an ID.
+	delete(id string) error
 }
 
-// TemplateRepository defines the interface for an object that stores meme templates.
-type TemplateRepository interface {
-	// Get a meme template from an ID.
-	Get(id string) (*Template, error)
+// templateRepository defines the interface for an object that stores meme templates.
+type templateRepository interface {
+	// get a meme template from an ID.
+	get(id string) (*Template, error)
 
 	// Create a meme template.
-	Create(template *Template) error
+	create(template *Template) error
 
 	// Delete a meme template from an ID.
-	Delete(id string) error
+	delete(id string) error
 }

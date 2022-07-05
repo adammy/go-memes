@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var _ TemplateRepository = (*inMemoryTemplateRepository)(nil)
+var _ templateRepository = (*inMemoryTemplateRepository)(nil)
 
 var (
 	templates = map[string]Template{
@@ -43,34 +43,89 @@ var (
 				},
 			},
 		},
+		"456": {
+			ImgPath: "assets/templates/two-buttons.png",
+			Width:   500,
+			Height:  756,
+			TextStyle: []TextStyle{
+				{
+					X:     50,
+					Y:     100,
+					Width: 100,
+					Font: Font{
+						Family: "Impact",
+						Size:   20,
+						Color:  "#000000",
+					},
+					Rotation: &Rotation{
+						Degrees: -10,
+					},
+				},
+				{
+					X:     240,
+					Y:     100,
+					Width: 100,
+					Font: Font{
+						Family: "Impact",
+						Size:   20,
+						Color:  "#000000",
+					},
+					Stroke: &Stroke{
+						Size:  2,
+						Color: "#FF0000",
+					},
+					Rotation: &Rotation{
+						Degrees: -10,
+					},
+				},
+				{
+					X:     20,
+					Y:     675,
+					Width: 460,
+					Font: Font{
+						Family: "Impact",
+						Size:   40,
+						Color:  "#FFFFFF",
+					},
+					Stroke: &Stroke{
+						Size:  4,
+						Color: "#000000",
+					},
+				},
+			},
+		},
 	}
 )
 
 type inMemoryTemplateRepository struct {
-	Templates map[string]Template
+	templates map[string]Template
 }
 
+// NewInMemoryTemplateRepository constructs an inMemoryTemplateRepository.
 func NewInMemoryTemplateRepository() (*inMemoryTemplateRepository, error) {
 	return &inMemoryTemplateRepository{
-		Templates: templates,
+		templates: templates,
 	}, nil
 }
 
-func (r *inMemoryTemplateRepository) Get(id string) (*Template, error) {
-	if template, ok := r.Templates[id]; ok {
+// Get a meme template from an ID.
+func (r *inMemoryTemplateRepository) get(id string) (*Template, error) {
+	if template, ok := r.templates[id]; ok {
 		return &template, nil
 	}
 	return nil, fmt.Errorf("template %s was not found", id)
 }
 
-func (r *inMemoryTemplateRepository) Create(template *Template) error {
-	r.Templates[template.ID] = *template
+// Create a meme template.
+func (r *inMemoryTemplateRepository) create(template *Template) error {
+	r.templates[template.ID] = *template
 	return nil
 }
 
-func (r *inMemoryTemplateRepository) Delete(id string) error {
-	if _, ok := r.Templates[id]; ok {
-		delete(r.Templates, id)
+// Delete a meme template from an ID.
+func (r *inMemoryTemplateRepository) delete(id string) error {
+	if _, ok := r.templates[id]; ok {
+		delete(r.templates, id)
 		return nil
 	}
 	return fmt.Errorf("template %s was not found", id)
