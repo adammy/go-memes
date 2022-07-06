@@ -8,7 +8,7 @@ var _ templateRepository = (*inMemoryTemplateRepository)(nil)
 
 var (
 	templates = map[string]Template{
-		"123": {
+		"yall-got-any-more-of-that": {
 			ImgPath: "assets/templates/yall-got-any-more-of-that.png",
 			Width:   600,
 			Height:  471,
@@ -43,7 +43,7 @@ var (
 				},
 			},
 		},
-		"456": {
+		"two-buttons": {
 			ImgPath: "assets/templates/two-buttons.png",
 			Width:   500,
 			Height:  756,
