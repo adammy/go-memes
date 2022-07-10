@@ -17,25 +17,25 @@ type inMemoryRepository struct {
 // NewInMemoryRepository constructs an inMemoryRepository.
 func NewInMemoryRepository(fontPaths map[string]string) (*inMemoryRepository, error) {
 	var (
-		myFontPaths map[string]string
+		resolvedFontPaths map[string]string
 	)
 	if fontPaths != nil {
-		myFontPaths = fontPaths
+		resolvedFontPaths = fontPaths
 	} else {
-		myFontPaths = DefaultFonts
+		resolvedFontPaths = DefaultFonts
 	}
 
-	myFonts := map[string]*truetype.Font{}
-	for name, path := range myFontPaths {
+	fonts := map[string]*truetype.Font{}
+	for name, path := range resolvedFontPaths {
 		font, _ := getFont(path)
 		if font != nil {
-			myFonts[name] = font
+			fonts[name] = font
 		}
 	}
 
 	return &inMemoryRepository{
-		fontPaths: myFontPaths,
-		fonts:     map[string]*truetype.Font{},
+		fontPaths: resolvedFontPaths,
+		fonts:     fonts,
 	}, nil
 }
 
@@ -50,7 +50,7 @@ func (r *inMemoryRepository) GetPath(name string) (string, error) {
 	if path, ok := r.fontPaths[name]; ok {
 		return path, nil
 	}
-	return "", fmt.Errorf("font %s was not found", name)
+	return "", fmt.Errorf("font path %s was not found", name)
 }
 
 func getFont(path string) (*truetype.Font, error) {

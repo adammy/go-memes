@@ -15,8 +15,8 @@ func main() {
 		panic(err)
 	}
 
-	// img, err := svc.CreateMeme("yall-got-any-more-of-them", []string{strings.ToUpper("Y'all Got Any More Of Them"), strings.ToUpper("Ape JPEGs")})
-	img, err := svc.CreateMeme("two-buttons", []string{"me telling gordo im quitting", "me just disappearing", strings.ToUpper("Dav")})
+	img, err := svc.CreateMeme("yall-got-any-more-of-them", []string{strings.ToUpper("Y'all Got Any More Of Them"), strings.ToUpper("Ape JPEGs")})
+	// img, err := svc.CreateMeme("two-buttons", []string{"me telling gordo im quitting", "me just disappearing", strings.ToUpper("Dav")})
 	if err != nil {
 		panic(err)
 	}

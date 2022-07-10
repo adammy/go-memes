@@ -7,6 +7,7 @@ import (
 	"github.com/adammy/go-memes/pkg/meme/font"
 	"github.com/adammy/go-memes/pkg/meme/template"
 	"github.com/fogleman/gg"
+	"github.com/golang/freetype/truetype"
 )
 
 // service contains functionality related to creating Meme objects.
@@ -48,12 +49,12 @@ func (s *service) CreateMeme(templateId string, text []string) (image.Image, err
 	dc := gg.NewContextForImage(img)
 
 	for i, style := range template.TextStyle {
-		fontPath, err := s.fontRepository.GetPath(style.Font.Family)
+		font, err := s.fontRepository.Get(style.Font.Family)
 		if err != nil {
 			return nil, err
 		}
 
-		if err := drawTextField(dc, text[i], &style, fontPath); err != nil {
+		if err := drawTextField(dc, text[i], &style, font); err != nil {
 			return nil, err
 		}
 	}
@@ -62,10 +63,11 @@ func (s *service) CreateMeme(templateId string, text []string) (image.Image, err
 }
 
 // drawTextField draws the full text object to the drawing context.
-func drawTextField(dc *gg.Context, text string, style *template.TextStyle, fontPath string) error {
-	if err := dc.LoadFontFace(fontPath, float64(style.Font.Size)); err != nil {
-		return err
-	}
+func drawTextField(dc *gg.Context, text string, style *template.TextStyle, font *truetype.Font) error {
+	face := truetype.NewFace(font, &truetype.Options{
+		Size: float64(style.Font.Size),
+	})
+	dc.SetFontFace(face)
 
 	anchorX, anchorY, err := getAnchorCoordinates(dc, text, style)
 	if err != nil {
