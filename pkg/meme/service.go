@@ -4,29 +4,38 @@ import (
 	"image"
 	"math"
 
+	"github.com/adammy/go-memes/pkg/meme/font"
+	"github.com/adammy/go-memes/pkg/meme/template"
 	"github.com/fogleman/gg"
 )
 
 // service contains functionality related to creating Meme objects.
 type service struct {
-	TemplateRepository templateRepository
+	templateRepository template.Repository
+	fontRepository     font.Repository
 }
 
 // NewService constructs service.
 func NewService() (*service, error) {
-	templateRepository, err := NewInMemoryTemplateRepository()
+	templateRepository, err := template.NewInMemoryRepository(nil)
+	if err != nil {
+		return nil, err
+	}
+
+	fontRepository, err := font.NewInMemoryRepository(nil)
 	if err != nil {
 		return nil, err
 	}
 
 	return &service{
-		TemplateRepository: templateRepository,
+		templateRepository: templateRepository,
+		fontRepository:     fontRepository,
 	}, nil
 }
 
 // CreateMeme creates an image using the provided meme arg.
-func (s *service) CreateMeme(templateId string, strs []string) (image.Image, error) {
-	template, err := s.TemplateRepository.get(templateId)
+func (s *service) CreateMeme(templateId string, text []string) (image.Image, error) {
+	template, err := s.templateRepository.Get(templateId)
 	if err != nil {
 		return nil, err
 	}
@@ -38,22 +47,23 @@ func (s *service) CreateMeme(templateId string, strs []string) (image.Image, err
 
 	dc := gg.NewContextForImage(img)
 
-	for i, text := range template.TextStyle {
-		if err := drawTextField(dc, strs[i], &text); err != nil {
+	for i, style := range template.TextStyle {
+		fontPath, err := s.fontRepository.GetPath(style.Font.Family)
+		if err != nil {
 			return nil, err
 		}
-	}
 
-	if err := drawWatermark(dc, template); err != nil {
-		return nil, err
+		if err := drawTextField(dc, text[i], &style, fontPath); err != nil {
+			return nil, err
+		}
 	}
 
 	return dc.Image(), nil
 }
 
 // drawTextField draws the full text object to the drawing context.
-func drawTextField(dc *gg.Context, text string, style *TextStyle) error {
-	if err := loadFont(dc, &style.Font); err != nil {
+func drawTextField(dc *gg.Context, text string, style *template.TextStyle, fontPath string) error {
+	if err := dc.LoadFontFace(fontPath, float64(style.Font.Size)); err != nil {
 		return err
 	}
 
@@ -73,21 +83,8 @@ func drawTextField(dc *gg.Context, text string, style *TextStyle) error {
 	return nil
 }
 
-// loadFont loads a font to the drawing context.
-func loadFont(dc *gg.Context, font *Font) error {
-	fontPath := fonts[font.Family]
-	if fontPath == "" {
-		fontPath = defaultFontPath
-	}
-	if err := dc.LoadFontFace(fontPath, float64(font.Size)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // getAnchorCoordinates returns the x and y values for the center point of a text field.
-func getAnchorCoordinates(dc *gg.Context, text string, style *TextStyle) (uint16, uint16, error) {
+func getAnchorCoordinates(dc *gg.Context, text string, style *template.TextStyle) (uint16, uint16, error) {
 	lines := len(dc.WordWrap(text, float64(style.Width)))
 	x := (style.Width / 2) + style.X
 	y := style.Y + (uint16(style.Font.Size/2) * uint16(lines))
@@ -95,7 +92,7 @@ func getAnchorCoordinates(dc *gg.Context, text string, style *TextStyle) (uint16
 }
 
 // drawTextStroke draws the text stroke/outline to the drawing context.
-func drawTextStroke(dc *gg.Context, text string, style *TextStyle, anchorX, anchorY uint16) error {
+func drawTextStroke(dc *gg.Context, text string, style *template.TextStyle, anchorX, anchorY uint16) error {
 	if style.Stroke != nil {
 		dc.SetHexColor(style.Stroke.Color)
 		strokeSize := int(style.Stroke.Size)
@@ -121,7 +118,7 @@ func drawTextStroke(dc *gg.Context, text string, style *TextStyle, anchorX, anch
 }
 
 // drawText draws just the words to the drawing context.
-func drawText(dc *gg.Context, text string, style *TextStyle, anchorX, anchorY uint16) error {
+func drawText(dc *gg.Context, text string, style *template.TextStyle, anchorX, anchorY uint16) error {
 	if err := rotateText(dc, style, anchorX, anchorY, func() {
 		dc.SetHexColor(style.Font.Color)
 		dc.DrawStringWrapped(text, float64(anchorX), float64(anchorY), 0.5, 0.5, float64(style.Width), 1.5, gg.AlignCenter)
@@ -132,18 +129,8 @@ func drawText(dc *gg.Context, text string, style *TextStyle, anchorX, anchorY ui
 	return nil
 }
 
-// drawWatermark draws a watermark to the drawing context.
-func drawWatermark(dc *gg.Context, template *Template) error {
-	if err := loadFont(dc, &watermarkFont); err != nil {
-		return err
-	}
-	dc.SetHexColor(watermarkFont.Color)
-	dc.DrawString(watermarkText, 10, float64(template.Height-10))
-	return nil
-}
-
 // rotateText rotates the drawing context and then reverts the rotation after the fn argument is run
-func rotateText(dc *gg.Context, style *TextStyle, anchorX, anchorY uint16, fn func()) error {
+func rotateText(dc *gg.Context, style *template.TextStyle, anchorX, anchorY uint16, fn func()) error {
 	if style.Rotation != nil {
 		radians := gg.Radians(float64(style.Rotation.Degrees))
 		dc.RotateAbout(radians, float64(anchorX), float64(anchorY))
