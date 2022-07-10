@@ -1,14 +1,8 @@
-package meme
-
-import (
-	"fmt"
-)
-
-var _ templateRepository = (*inMemoryTemplateRepository)(nil)
+package template
 
 var (
-	templates = map[string]Template{
-		"yall-got-any-more-of-that": {
+	DefaultTemplates = map[string]Template{
+		"yall-got-any-more-of-them": {
 			ImgPath: "assets/templates/yall-got-any-more-of-that.png",
 			Width:   600,
 			Height:  471,
@@ -92,37 +86,3 @@ var (
 		},
 	}
 )
-
-type inMemoryTemplateRepository struct {
-	templates map[string]Template
-}
-
-// NewInMemoryTemplateRepository constructs an inMemoryTemplateRepository.
-func NewInMemoryTemplateRepository() (*inMemoryTemplateRepository, error) {
-	return &inMemoryTemplateRepository{
-		templates: templates,
-	}, nil
-}
-
-// Get a meme template from an ID.
-func (r *inMemoryTemplateRepository) get(id string) (*Template, error) {
-	if template, ok := r.templates[id]; ok {
-		return &template, nil
-	}
-	return nil, fmt.Errorf("template %s was not found", id)
-}
-
-// Create a meme template.
-func (r *inMemoryTemplateRepository) create(template *Template) error {
-	r.templates[template.ID] = *template
-	return nil
-}
-
-// Delete a meme template from an ID.
-func (r *inMemoryTemplateRepository) delete(id string) error {
-	if _, ok := r.templates[id]; ok {
-		delete(r.templates, id)
-		return nil
-	}
-	return fmt.Errorf("template %s was not found", id)
-}
