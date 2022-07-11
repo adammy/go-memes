@@ -3,13 +3,12 @@ package template
 var (
 	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
-			ID:      "yall-got-any-more-of-them",
-			Slug:    "yall-got-any-more-of-them",
-			Name:    "Y'all Got Any More of Them",
-			ImgPath: "assets/templates/yall-got-any-more-of-that.png",
-			ImgID:   "yall-got-any-more-of-them",
-			Width:   600,
-			Height:  471,
+			ID:     "yall-got-any-more-of-them",
+			Slug:   "yall-got-any-more-of-them",
+			Name:   "Y'all Got Any More of Them",
+			ImgID:  "yall-got-any-more-of-them",
+			Width:  600,
+			Height: 471,
 			TextStyle: []TextStyle{
 				{
 					X:     10,
@@ -42,13 +41,12 @@ var (
 			},
 		},
 		"two-buttons": {
-			ID:      "two-buttons",
-			Slug:    "yall-got-any-more-of-them",
-			Name:    "Two Buttons",
-			ImgPath: "assets/templates/two-buttons.png",
-			ImgID:   "two-buttons",
-			Width:   500,
-			Height:  756,
+			ID:     "two-buttons",
+			Slug:   "yall-got-any-more-of-them",
+			Name:   "Two Buttons",
+			ImgID:  "two-buttons",
+			Width:  500,
+			Height: 756,
 			TextStyle: []TextStyle{
 				{
 					X:     80,
