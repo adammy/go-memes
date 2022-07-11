@@ -20,20 +20,20 @@ func TestRepository_Get(t *testing.T) {
 		ID        string
 		error     bool
 	}{
-		"valid template": {
+		"valid get": {
 			ID: "yall-got-any-more-of-them",
 		},
-		"invalid template": {
+		"invalid get": {
 			ID:    "fake",
 			error: true,
 		},
-		"valid template with custom": {
+		"valid get with custom": {
 			templates: map[string]*template.Template{
 				"muh-meme": {},
 			},
 			ID: "muh-meme",
 		},
-		"invalid template with custom": {
+		"invalid get with custom": {
 			templates: map[string]*template.Template{},
 			ID:        "fake",
 			error:     true,
@@ -47,6 +47,68 @@ func TestRepository_Get(t *testing.T) {
 
 			if !tc.error {
 				assert.NotNil(t, template)
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+		})
+	}
+}
+
+func TestRepository_Create(t *testing.T) {
+	tests := map[string]struct {
+		templates map[string]*template.Template
+		ID        string
+		error     bool
+	}{
+		"valid creation": {
+			ID: "muh-meme",
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			r, _ := template.NewInMemoryRepository("", tc.templates)
+			err := r.Create(&template.Template{
+				ID: tc.ID,
+			})
+
+			if !tc.error {
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+		})
+	}
+}
+
+func TestRepository_Delete(t *testing.T) {
+	tests := map[string]struct {
+		templates map[string]*template.Template
+		ID        string
+		error     bool
+	}{
+		"valid deletion": {
+			templates: map[string]*template.Template{
+				"muh-meme": {},
+			},
+			ID: "muh-meme",
+		},
+		"invalid deletion": {
+			templates: map[string]*template.Template{
+				"muh-meme": {},
+			},
+			ID:    "not-muh-meme",
+			error: true,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			r, _ := template.NewInMemoryRepository("", tc.templates)
+			err := r.Delete(tc.ID)
+
+			if !tc.error {
 				assert.NoError(t, err)
 			} else {
 				assert.Error(t, err)

@@ -19,10 +19,10 @@ func TestRepository_Get(t *testing.T) {
 		name  string
 		error bool
 	}{
-		"valid font": {
+		"valid get": {
 			name: "Arial",
 		},
-		"invalid font": {
+		"invalid get": {
 			name:  "Fake",
 			error: true,
 		},
@@ -50,22 +50,22 @@ func TestRepository_GetPath(t *testing.T) {
 		expectedPath string
 		error        bool
 	}{
-		"valid font": {
+		"valid get": {
 			name:         "Arial",
 			expectedPath: "assets/fonts/arial.ttf",
 		},
-		"invalid font": {
+		"invalid get": {
 			name:  "Fake",
 			error: true,
 		},
-		"valid font with custom": {
+		"valid get with custom": {
 			fonts: map[string]string{
 				"Poppins": "my/custom/font/poppins.ttf",
 			},
 			name:         "Poppins",
 			expectedPath: "my/custom/font/poppins.ttf",
 		},
-		"invalid font with custom": {
+		"invalid get with custom": {
 			fonts: map[string]string{
 				"Poppins": "my/custom/font/poppins.ttf",
 			},
