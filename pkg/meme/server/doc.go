@@ -1,2 +1,2 @@
-// Package server creates the server to create memes.
+// Package server contains functionality for starting a server that can interface with the memes package.
 package server

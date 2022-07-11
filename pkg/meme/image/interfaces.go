@@ -4,11 +4,11 @@ import (
 	"image"
 )
 
-// Repository defines the interface for getting images.
+// Repository defines the interface for image storage.
 type Repository interface {
-	// Get an image.
+	// Get returns an image.
 	Get(ID string) (image.Image, error)
 
-	// GetPath gets a path for an image.
+	// GetPath returns the path for an image.
 	GetPath(ID string) (string, error)
 }

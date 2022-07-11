@@ -1,72 +1,73 @@
 package template
 
-// Template defines a structure for creating a Meme.
+// Template defines a structure for creating a meme.
 type Template struct {
-	// Unique identifier for the template.
+	// ID is a unique identifier for the template.
 	ID string
 
 	// Slug is a user-friendly URL slug or identifier.
 	Slug string
 
-	// User-friendly name for the template.
+	// Name is a User-friendly name for the template.
 	Name string
 
-	// ImgID is the ID of the image used for the template.
+	// ImgID is the unique identifier of the image used for the template.
 	ImgID string
 
-	// The width of the image. We want the precalculated and stored to avoid continually calculating this.
+	// Width is the width of the image. We want the precalculated and stored to avoid continually calculating this.
 	Width uint16
 
-	// The height of the image. We want the precalculated and stored to avoid continually calculating this.
+	// Height is the height of the image. We want the precalculated and stored to avoid continually calculating this.
 	Height uint16
 
-	// The text fields for this template.
+	// TextStyle is the text field styling for this template.
 	TextStyle []TextStyle
 }
 
 // TextStyle defines styling and positioning for text.
 type TextStyle struct {
-	// The x-axis value representing the top-left of a text field.
+	// X is the x-axis value representing the top-left of a text field.
 	X uint16
 
-	// The y-axis value representing the top-left of a text field.
+	// Y is the y-axis value representing the top-left of a text field.
 	Y uint16
 
-	// The width of the text field.
+	// Width is the width of the text field.
 	Width uint16
 
-	// Styling for the text.
+	// Font is the font styling for the text.
 	Font Font
 
-	// The stroke/outline for the text.
+	// Stroke is the stroke/outline for the text.
 	Stroke *Stroke
 
-	// The rotation for the text.
+	// Rotation is the rotation for the text.
 	Rotation *Rotation
 }
 
-// Font defines styling for Text.
+// Font defines styling for text.
 type Font struct {
-	// The font family (e.g., "Helvetica").
+	// Family defines the font family (e.g., "Helvetica").
 	Family string
 
-	// The font size in point values.
+	// Size defines the font size in point values.
 	Size uint8
 
-	// The color of the text
+	// Color defines the color of the text in hexadecimal (e.g., "#FFFFFF").
 	Color string
 }
 
 // Stroke defines the stroke styling for text. It's the border around text.
 type Stroke struct {
-	// The size of the text stroke.
+	// Size defines the size of the text stroke.
 	Size uint8
 
-	// The color of the text stroke as a hex code, including the prepending pound (#) (e.g., "#FFFFFF").
+	// Color defines the color of the text stroke in hexadecimal (e.g., "#FFFFFF").
 	Color string
 }
 
 // Rotation defines the rotation for text.
 type Rotation struct {
+	// Degrees defines the number of degrees to rotate the text.
 	Degrees int16
 }

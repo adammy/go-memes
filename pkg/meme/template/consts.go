@@ -1,6 +1,7 @@
 package template
 
 var (
+	// DefaultTemplates defines the templates available for memes.
 	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
 			ID:     "yall-got-any-more-of-them",

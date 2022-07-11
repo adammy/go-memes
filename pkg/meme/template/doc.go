@@ -1,2 +1,2 @@
-// Package template provides templating functionality to make memes.
+// Package template provides operations for getting, creating, and deleting templates.
 package template

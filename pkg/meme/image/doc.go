@@ -1,2 +1,2 @@
-// Package image provides functionality for images.
+// Package image provides operations for getting, creating, and deleting images.
 package image
