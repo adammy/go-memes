@@ -8,15 +8,15 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r, _ := template.NewInMemoryRepository(nil)
+	r, _ := template.NewInMemoryRepository("", nil)
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*template.Repository)(nil), r)
 }
 
-func TestGet(t *testing.T) {
+func TestRepository_Get(t *testing.T) {
 	tests := map[string]struct {
-		templates map[string]template.Template
+		templates map[string]*template.Template
 		ID        string
 		error     bool
 	}{
@@ -28,13 +28,13 @@ func TestGet(t *testing.T) {
 			error: true,
 		},
 		"valid template with custom": {
-			templates: map[string]template.Template{
+			templates: map[string]*template.Template{
 				"muh-meme": {},
 			},
 			ID: "muh-meme",
 		},
 		"invalid template with custom": {
-			templates: map[string]template.Template{},
+			templates: map[string]*template.Template{},
 			ID:        "fake",
 			error:     true,
 		},
@@ -42,7 +42,7 @@ func TestGet(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := template.NewInMemoryRepository(tc.templates)
+			r, _ := template.NewInMemoryRepository("", tc.templates)
 			template, err := r.Get(tc.ID)
 
 			if !tc.error {

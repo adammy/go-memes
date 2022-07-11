@@ -1,7 +1,7 @@
 package template
 
 var (
-	DefaultTemplates = map[string]Template{
+	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
 			ImgPath: "assets/templates/yall-got-any-more-of-that.png",
 			Width:   600,

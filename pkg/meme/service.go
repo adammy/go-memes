@@ -17,13 +17,13 @@ type service struct {
 }
 
 // NewService constructs service.
-func NewService() (*service, error) {
-	templateRepository, err := template.NewInMemoryRepository(nil)
+func NewService(baseAssetPath string) (*service, error) {
+	templateRepository, err := template.NewInMemoryRepository(baseAssetPath, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	fontRepository, err := font.NewInMemoryRepository(nil)
+	fontRepository, err := font.NewInMemoryRepository(baseAssetPath, nil)
 	if err != nil {
 		return nil, err
 	}

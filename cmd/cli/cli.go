@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	svc, err := meme.NewService()
+	svc, err := meme.NewService("")
 	if err != nil {
 		panic(err)
 	}
