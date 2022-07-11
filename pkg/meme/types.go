@@ -14,3 +14,12 @@ type Meme struct {
 	// Text defines the text used in the meme. Stored here for future indexing and searching.
 	Text []string
 }
+
+// CreateMemeFromTemplate informs the Service on how to create a meme.
+type CreateMemeFromTemplate struct {
+	// TemplateID defines the template that was used to create this meme.
+	TemplateID string `json:"templateId"`
+
+	// Text defines the text used in the meme. Stored here for future indexing and searching.
+	Text []string `json:"text"`
+}

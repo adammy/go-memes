@@ -11,15 +11,15 @@ import (
 	"github.com/golang/freetype/truetype"
 )
 
-// service contains functionality related to creating Meme objects.
-type service struct {
+// Service contains functionality related to creating Meme objects.
+type Service struct {
 	templateRepository template.Repository
 	fontRepository     font.Repository
 	imageRepository    imgPkg.Repository
 }
 
-// NewService constructs service.
-func NewService(baseAssetPath string) (*service, error) {
+// NewService constructs Service.
+func NewService(baseAssetPath string) (*Service, error) {
 	templateRepository, err := template.NewInMemoryRepository(baseAssetPath, nil)
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func NewService(baseAssetPath string) (*service, error) {
 		return nil, err
 	}
 
-	return &service{
+	return &Service{
 		templateRepository: templateRepository,
 		fontRepository:     fontRepository,
 		imageRepository:    imageRepository,
@@ -43,7 +43,7 @@ func NewService(baseAssetPath string) (*service, error) {
 }
 
 // CreateMemeFromTemplateID creates an image using the provided templateID.
-func (s *service) CreateMemeFromTemplateID(templateID string, text []string) (image.Image, error) {
+func (s *Service) CreateMemeFromTemplateID(templateID string, text []string) (image.Image, error) {
 	tmpl, err := s.templateRepository.Get(templateID)
 	if err != nil {
 		return nil, err
