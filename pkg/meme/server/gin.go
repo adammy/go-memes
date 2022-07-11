@@ -14,7 +14,6 @@ var _ Server = (*ginServer)(nil)
 
 type ginServer struct {
 	engine *gin.Engine
-	svc    *meme.Service
 }
 
 // NewGinServer returns a new Server utilizing the gin framework.

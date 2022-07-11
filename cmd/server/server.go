@@ -5,12 +5,12 @@ import (
 )
 
 func main() {
-	server, err := server.NewGinServer()
+	s, err := server.NewGinServer()
 	if err != nil {
 		panic(err)
 	}
 
-	if err := server.Start(); err != nil {
+	if err := s.Start(); err != nil {
 		panic(err)
 	}
 }
