@@ -8,10 +8,11 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r, _ := font.NewInMemoryRepository("", nil)
+	r, err := font.NewInMemoryRepository("", nil)
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*font.Repository)(nil), r)
+	assert.NoError(t, err)
 }
 
 func TestRepository_Get(t *testing.T) {
@@ -19,10 +20,10 @@ func TestRepository_Get(t *testing.T) {
 		name  string
 		error bool
 	}{
-		"valid get": {
+		"valid": {
 			name: "Arial",
 		},
-		"invalid get": {
+		"invalid": {
 			name:  "Fake",
 			error: true,
 		},
@@ -31,10 +32,10 @@ func TestRepository_Get(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			r, _ := font.NewInMemoryRepository("../../../", nil)
-			font, err := r.Get(tc.name)
+			textFont, err := r.Get(tc.name)
 
 			if !tc.error {
-				assert.NotNil(t, font)
+				assert.NotNil(t, textFont)
 				assert.NoError(t, err)
 			} else {
 				assert.Error(t, err)
@@ -50,22 +51,22 @@ func TestRepository_GetPath(t *testing.T) {
 		expectedPath string
 		error        bool
 	}{
-		"valid get": {
+		"valid": {
 			name:         "Arial",
 			expectedPath: "assets/fonts/arial.ttf",
 		},
-		"invalid get": {
+		"invalid": {
 			name:  "Fake",
 			error: true,
 		},
-		"valid get with custom": {
+		"valid with custom": {
 			fonts: map[string]string{
 				"Poppins": "my/custom/font/poppins.ttf",
 			},
 			name:         "Poppins",
 			expectedPath: "my/custom/font/poppins.ttf",
 		},
-		"invalid get with custom": {
+		"invalid with custom": {
 			fonts: map[string]string{
 				"Poppins": "my/custom/font/poppins.ttf",
 			},

@@ -1,11 +1,15 @@
 package template
 
 var (
+	// DefaultTemplates defines the templates available for memes.
 	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
-			ImgPath: "assets/templates/yall-got-any-more-of-that.png",
-			Width:   600,
-			Height:  471,
+			ID:     "yall-got-any-more-of-them",
+			Slug:   "yall-got-any-more-of-them",
+			Name:   "Y'all Got Any More of Them",
+			ImgID:  "yall-got-any-more-of-them",
+			Width:  600,
+			Height: 471,
 			TextStyle: []TextStyle{
 				{
 					X:     10,
@@ -38,9 +42,12 @@ var (
 			},
 		},
 		"two-buttons": {
-			ImgPath: "assets/templates/two-buttons.png",
-			Width:   500,
-			Height:  756,
+			ID:     "two-buttons",
+			Slug:   "yall-got-any-more-of-them",
+			Name:   "Two Buttons",
+			ImgID:  "two-buttons",
+			Width:  500,
+			Height: 756,
 			TextStyle: []TextStyle{
 				{
 					X:     80,

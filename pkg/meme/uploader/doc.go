@@ -1,2 +1,2 @@
-// Package uploader provides functionality for uploading memes.
+// Package uploader provides operations for uploading memes.
 package uploader

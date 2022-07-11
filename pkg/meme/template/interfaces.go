@@ -1,6 +1,6 @@
 package template
 
-// Repository defines the interface for an object that stores meme templates.
+// Repository defines the interface for template storage.
 type Repository interface {
 	// Get a meme template from an ID.
 	Get(id string) (*Template, error)

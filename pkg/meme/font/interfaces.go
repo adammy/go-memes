@@ -4,11 +4,11 @@ import (
 	"github.com/golang/freetype/truetype"
 )
 
-// Repository defines the interface for getting fonts.
+// Repository defines the interface for font storage.
 type Repository interface {
-	// Get a font.
+	// Get returns a font.
 	Get(name string) (*truetype.Font, error)
 
-	// Get a path for a font.
+	// GetPath returns the path for a font.
 	GetPath(name string) (string, error)
 }

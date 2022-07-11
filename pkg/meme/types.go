@@ -1,16 +1,25 @@
 package meme
 
-// Meme defines a user-created meme.
+// Meme defines a meme.
 type Meme struct {
-	// Unique identifier for the meme.
+	// ID is a unique identifier for the meme.
 	ID string
 
-	// The path to the image. For locally storing, should be "my-image.png". For cloud storing, it'll be some CDN URL.
+	// ImgPath is the path to the image.
 	ImgPath string
 
-	// The identifier for the template used to create the meme.
+	// TemplateID defines the template that was used to create this meme.
 	TemplateID string
 
-	// The text used in the meme. Stored here for future indexing and searching.
+	// Text defines the text used in the meme. Stored here for future indexing and searching.
 	Text []string
+}
+
+// CreateMemeFromTemplate informs the Service on how to create a meme.
+type CreateMemeFromTemplate struct {
+	// TemplateID defines the template that was used to create this meme.
+	TemplateID string `json:"templateId"`
+
+	// Text defines the text used in the meme. Stored here for future indexing and searching.
+	Text []string `json:"text"`
 }
