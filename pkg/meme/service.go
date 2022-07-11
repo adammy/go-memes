@@ -5,6 +5,7 @@ import (
 	"math"
 
 	"github.com/adammy/go-memes/pkg/meme/font"
+	imgPkg "github.com/adammy/go-memes/pkg/meme/image"
 	"github.com/adammy/go-memes/pkg/meme/template"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
@@ -14,6 +15,7 @@ import (
 type service struct {
 	templateRepository template.Repository
 	fontRepository     font.Repository
+	imageRepository    imgPkg.Repository
 }
 
 // NewService constructs service.
@@ -28,33 +30,39 @@ func NewService(baseAssetPath string) (*service, error) {
 		return nil, err
 	}
 
-	return &service{
-		templateRepository: templateRepository,
-		fontRepository:     fontRepository,
-	}, nil
-}
-
-// CreateMeme creates an image using the provided meme arg.
-func (s *service) CreateMeme(templateId string, text []string) (image.Image, error) {
-	template, err := s.templateRepository.Get(templateId)
+	imageRepository, err := imgPkg.NewLocalRepository(baseAssetPath, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	img, err := gg.LoadImage(template.ImgPath)
+	return &service{
+		templateRepository: templateRepository,
+		fontRepository:     fontRepository,
+		imageRepository:    imageRepository,
+	}, nil
+}
+
+// CreateMemeFromTemplateID creates an image using the provided templateID.
+func (s *service) CreateMemeFromTemplateID(templateID string, text []string) (image.Image, error) {
+	tmpl, err := s.templateRepository.Get(templateID)
+	if err != nil {
+		return nil, err
+	}
+
+	img, err := s.imageRepository.Get(tmpl.ImgID)
 	if err != nil {
 		return nil, err
 	}
 
 	dc := gg.NewContextForImage(img)
 
-	for i, style := range template.TextStyle {
-		font, err := s.fontRepository.Get(style.Font.Family)
+	for i, style := range tmpl.TextStyle {
+		textFont, err := s.fontRepository.Get(style.Font.Family)
 		if err != nil {
 			return nil, err
 		}
 
-		if err := drawTextField(dc, text[i], &style, font); err != nil {
+		if err := drawTextField(dc, text[i], &style, textFont); err != nil {
 			return nil, err
 		}
 	}
@@ -63,8 +71,8 @@ func (s *service) CreateMeme(templateId string, text []string) (image.Image, err
 }
 
 // drawTextField draws the full text object to the drawing context.
-func drawTextField(dc *gg.Context, text string, style *template.TextStyle, font *truetype.Font) error {
-	face := truetype.NewFace(font, &truetype.Options{
+func drawTextField(dc *gg.Context, text string, style *template.TextStyle, textFont *truetype.Font) error {
+	face := truetype.NewFace(textFont, &truetype.Options{
 		Size: float64(style.Font.Size),
 	})
 	dc.SetFontFace(face)

@@ -5,11 +5,14 @@ type Template struct {
 	// Unique identifier for the template.
 	ID string
 
+	// Slug is a user-friendly URL slug or identifier.
+	Slug string
+
 	// User-friendly name for the template.
 	Name string
 
-	// The path to the image. For locally storing, should be "assets/my-image.png". For cloud storing, it'll be some CDN URL.
-	ImgPath string
+	// ImgID is the ID of the image used for the template.
+	ImgID string
 
 	// The width of the image. We want the precalculated and stored to avoid continually calculating this.
 	Width uint16

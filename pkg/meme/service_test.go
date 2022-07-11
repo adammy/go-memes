@@ -14,22 +14,27 @@ func TestNewService(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestCreateMeme(t *testing.T) {
+func TestService_CreateMemeFromTemplateID(t *testing.T) {
 	tests := map[string]struct {
 		templateID string
 		text       []string
 		error      bool
 	}{
-		"success": {
+		"valid": {
 			templateID: "yall-got-any-more-of-them",
 			text:       []string{"test", "test"},
+		},
+		"invalid": {
+			templateID: "not-real",
+			text:       []string{"test", "test"},
+			error:      true,
 		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			svc, _ := meme.NewService("../../")
-			img, err := svc.CreateMeme(tc.templateID, tc.text)
+			img, err := svc.CreateMemeFromTemplateID(tc.templateID, tc.text)
 
 			if !tc.error {
 				assert.NotNil(t, img)

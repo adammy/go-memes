@@ -2,7 +2,6 @@ package template
 
 import (
 	"fmt"
-	"path/filepath"
 )
 
 var _ Repository = (*inMemoryRepository)(nil)
@@ -23,10 +22,6 @@ func NewInMemoryRepository(basePath string, templates map[string]*Template) (*in
 		resolvedTemplates = DefaultTemplates
 	}
 
-	for _, template := range resolvedTemplates {
-		template.ImgPath = filepath.Join(basePath, template.ImgPath)
-	}
-
 	return &inMemoryRepository{
 		basePath:  basePath,
 		templates: resolvedTemplates,
@@ -41,7 +36,6 @@ func (r *inMemoryRepository) Get(id string) (*Template, error) {
 }
 
 func (r *inMemoryRepository) Create(template *Template) error {
-	template.ImgPath = filepath.Join(r.basePath, template.ImgPath)
 	r.templates[template.ID] = template
 	return nil
 }
