@@ -14,7 +14,7 @@ func TestNewInMemoryRepository(t *testing.T) {
 	assert.Implements(t, (*template.Repository)(nil), r)
 }
 
-func TestRepository_Get(t *testing.T) {
+func TestInMemoryRepository_Get(t *testing.T) {
 	tests := map[string]struct {
 		templates map[string]*template.Template
 		ID        string
@@ -46,7 +46,7 @@ func TestRepository_Get(t *testing.T) {
 	}
 }
 
-func TestRepository_Create(t *testing.T) {
+func TestInMemoryRepository_Create(t *testing.T) {
 	tests := map[string]struct {
 		templates map[string]*template.Template
 		ID        string
@@ -74,7 +74,7 @@ func TestRepository_Create(t *testing.T) {
 	}
 }
 
-func TestRepository_Delete(t *testing.T) {
+func TestInMemoryRepository_Delete(t *testing.T) {
 	tests := map[string]struct {
 		templates map[string]*template.Template
 		ID        string

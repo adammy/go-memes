@@ -14,7 +14,7 @@ func TestNewLocalRepository(t *testing.T) {
 	assert.Implements(t, (*image.Repository)(nil), r)
 }
 
-func TestRepository_Get(t *testing.T) {
+func TestLocalRepository_Get(t *testing.T) {
 	tests := map[string]struct {
 		paths map[string]string
 		ID    string
@@ -46,7 +46,7 @@ func TestRepository_Get(t *testing.T) {
 	}
 }
 
-func TestRepository_GetPath(t *testing.T) {
+func TestLocalRepository_GetPath(t *testing.T) {
 	tests := map[string]struct {
 		paths map[string]string
 		ID    string

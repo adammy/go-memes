@@ -14,7 +14,7 @@ func TestNewInMemoryRepository(t *testing.T) {
 	assert.Implements(t, (*font.Repository)(nil), r)
 }
 
-func TestRepository_Get(t *testing.T) {
+func TestInMemoryRepository_Get(t *testing.T) {
 	tests := map[string]struct {
 		paths map[string]string
 		name  string
@@ -46,7 +46,7 @@ func TestRepository_Get(t *testing.T) {
 	}
 }
 
-func TestRepository_GetPath(t *testing.T) {
+func TestInMemoryRepository_GetPath(t *testing.T) {
 	tests := map[string]struct {
 		paths        map[string]string
 		name         string

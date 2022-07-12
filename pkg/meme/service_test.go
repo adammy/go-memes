@@ -16,7 +16,7 @@ var (
 	imageRepository    = image.NewLocalRepository(image.DefaultTestServiceImagePaths)
 	memeRepository     = meme.NewInMemoryRepository()
 	templateRepository = template.NewInMemoryRepository(template.DefaultTemplates)
-	uploader           = uploaderPkg.NewLocalUploader()
+	uploader           = uploaderPkg.NewNoopUploader()
 )
 
 func TestNewService(t *testing.T) {

@@ -9,13 +9,13 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r := uploader.NewLocalUploader()
+	u := uploader.NewLocalUploader()
 
-	assert.NotNil(t, r)
-	assert.Implements(t, (*uploader.Uploader)(nil), r)
+	assert.NotNil(t, u)
+	assert.Implements(t, (*uploader.Uploader)(nil), u)
 }
 
-func TestUploader_UploadPNG(t *testing.T) {
+func TestLocalUploader_UploadPNG(t *testing.T) {
 	tests := map[string]struct {
 		path         string
 		img          image.Image
