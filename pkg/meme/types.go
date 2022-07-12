@@ -17,9 +17,6 @@ type Meme struct {
 
 // CreateMemeFromTemplate informs the Service on how to create a meme.
 type CreateMemeFromTemplate struct {
-	// TemplateID defines the template that was used to create this meme.
-	TemplateID string `json:"templateId"`
-
 	// Text defines the text used in the meme. Stored here for future indexing and searching.
-	Text []string `json:"text"`
+	Text []string `json:"text" binding:"required"`
 }

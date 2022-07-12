@@ -2,10 +2,8 @@ package server
 
 import (
 	"github.com/adammy/go-memes/pkg/meme"
-	"github.com/google/uuid"
-	"image/png"
 	"net/http"
-	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,83 +11,90 @@ import (
 var _ Server = (*ginServer)(nil)
 
 type ginServer struct {
-	engine *gin.Engine
+	config  Config
+	router  *gin.Engine
+	service *meme.Service
 }
 
 // NewGinServer returns a new Server utilizing the gin framework.
 func NewGinServer() (*ginServer, error) {
-	r := gin.Default()
+	r := gin.New()
 
-	err := r.SetTrustedProxies([]string{})
+	svc, err := meme.NewService("")
 	if err != nil {
 		return nil, err
 	}
 
-	if err := registerRoutes(r); err != nil {
-		return nil, err
-	}
-
 	return &ginServer{
-		engine: r,
+		config: Config{
+			Port:        8080,
+			LocalAssets: true,
+		},
+		router:  r,
+		service: svc,
 	}, nil
 }
 
 func (s *ginServer) Start() error {
-	if err := s.engine.Run(":8080"); err != nil {
+	s.router.Use(gin.Logger())
+	s.router.Use(gin.Recovery())
+
+	err := s.router.SetTrustedProxies([]string{})
+	if err != nil {
+		return err
+	}
+
+	if err := s.registerRoutes(); err != nil {
+		return err
+	}
+
+	if err := s.router.Run(":" + strconv.Itoa(int(s.config.Port))); err != nil {
 		return err
 	}
 	return nil
 }
 
-func registerRoutes(r *gin.Engine) error {
-	r.GET("/ping", pingHandler)
-	r.POST("/memes", createMemeFromTemplateIDHandler)
+func (s *ginServer) registerRoutes() error {
+	if s.config.LocalAssets {
+		s.router.Static("/assets", "./assets")
+	}
+
+	v1 := s.router.Group("/v1")
+	{
+		v1.GET("/ping", s.pingHandler)
+		v1.POST("/templates/:templateID/memes", s.createMemeFromTemplateIDHandler)
+	}
+
 	return nil
 }
 
-func pingHandler(ctx *gin.Context) {
+func (s *ginServer) pingHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "ok",
 	})
 }
 
-func createMemeFromTemplateIDHandler(ctx *gin.Context) {
-	var createMeme meme.CreateMemeFromTemplate
-	if err := ctx.BindJSON(&createMeme); err != nil {
+func (s *ginServer) createMemeFromTemplateIDHandler(ctx *gin.Context) {
+	templateID := ctx.Param("templateID")
+	if templateID == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
+			"error": "templateID required",
 		})
 		return
 	}
 
-	svc, err := meme.NewService("")
+	var createMeme meme.CreateMemeFromTemplate
+	if err := ctx.ShouldBind(&createMeme); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err := s.service.CreateMemeAndUploadFromTemplateID(templateID, createMeme.Text)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": "this needs to go away lol",
-		})
-		return
-	}
-
-	img, err := svc.CreateMemeFromTemplateID(createMeme.TemplateID, createMeme.Text)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
-		})
-		return
-	}
-
-	f, err := os.Create(uuid.NewString() + ".png")
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
-		})
-		return
-	}
-	defer f.Close()
-
-	if err := png.Encode(f, img); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
+			"error": err.Error(),
 		})
 		return
 	}
