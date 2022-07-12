@@ -7,25 +7,14 @@ import (
 var _ Repository = (*inMemoryRepository)(nil)
 
 type inMemoryRepository struct {
-	basePath  string
 	templates map[string]*Template
 }
 
 // NewInMemoryRepository constructs an inMemoryRepository.
-func NewInMemoryRepository(basePath string, templates map[string]*Template) (*inMemoryRepository, error) {
-	var (
-		resolvedTemplates map[string]*Template
-	)
-	if templates != nil {
-		resolvedTemplates = templates
-	} else {
-		resolvedTemplates = DefaultTemplates
-	}
-
+func NewInMemoryRepository(templates map[string]*Template) *inMemoryRepository {
 	return &inMemoryRepository{
-		basePath:  basePath,
-		templates: resolvedTemplates,
-	}, nil
+		templates: templates,
+	}
 }
 
 func (r *inMemoryRepository) Get(id string) (*Template, error) {

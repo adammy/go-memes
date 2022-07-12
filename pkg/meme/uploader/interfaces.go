@@ -7,5 +7,5 @@ import (
 // Uploader defines the interface for an object that uploads an image.
 type Uploader interface {
 	// UploadPNG pushes an image to some designated storage.
-	UploadPNG(path string, img image.Image) error
+	UploadPNG(filename string, img image.Image) error
 }

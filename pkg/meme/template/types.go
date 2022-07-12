@@ -22,6 +22,9 @@ type Template struct {
 
 	// TextStyle is the text field styling for this template.
 	TextStyle []TextStyle
+
+	// DefaultText is the text used to display meme usage.
+	DefaultText []string
 }
 
 // TextStyle defines styling and positioning for text.

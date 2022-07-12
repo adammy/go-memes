@@ -8,22 +8,24 @@ import (
 )
 
 func TestNewLocalRepository(t *testing.T) {
-	r, err := image.NewLocalRepository("", nil)
+	r := image.NewLocalRepository(image.DefaultTestImagePaths)
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*image.Repository)(nil), r)
-	assert.NoError(t, err)
 }
 
 func TestRepository_Get(t *testing.T) {
 	tests := map[string]struct {
+		paths map[string]string
 		ID    string
 		error bool
 	}{
 		"valid": {
-			ID: "two-buttons",
+			paths: image.DefaultTestImagePaths,
+			ID:    "two-buttons",
 		},
 		"invalid": {
+			paths: image.DefaultTestImagePaths,
 			ID:    "fake",
 			error: true,
 		},
@@ -31,7 +33,7 @@ func TestRepository_Get(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := image.NewLocalRepository("../../../", nil)
+			r := image.NewLocalRepository(tc.paths)
 			img, err := r.Get(tc.ID)
 
 			if !tc.error {
@@ -46,13 +48,16 @@ func TestRepository_Get(t *testing.T) {
 
 func TestRepository_GetPath(t *testing.T) {
 	tests := map[string]struct {
+		paths map[string]string
 		ID    string
 		error bool
 	}{
 		"valid": {
-			ID: "two-buttons",
+			paths: image.DefaultTestImagePaths,
+			ID:    "two-buttons",
 		},
 		"invalid": {
+			paths: image.DefaultTestImagePaths,
 			ID:    "fake",
 			error: true,
 		},
@@ -60,7 +65,7 @@ func TestRepository_GetPath(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := image.NewLocalRepository("", nil)
+			r := image.NewLocalRepository(tc.paths)
 			path, err := r.GetPath(tc.ID)
 
 			if !tc.error {

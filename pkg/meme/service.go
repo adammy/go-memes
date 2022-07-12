@@ -1,7 +1,6 @@
 package meme
 
 import (
-	"github.com/google/uuid"
 	"image"
 	"math"
 
@@ -11,44 +10,33 @@ import (
 	uploaderPkg "github.com/adammy/go-memes/pkg/meme/uploader"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
+	"github.com/google/uuid"
 )
 
 // Service contains functionality related to creating Meme objects.
 type Service struct {
-	templateRepository templatePkg.Repository
 	fontRepository     fontPkg.Repository
 	imageRepository    imagePkg.Repository
+	memeRepository     Repository
+	templateRepository templatePkg.Repository
 	uploader           uploaderPkg.Uploader
 }
 
 // NewService constructs Service.
-func NewService(baseAssetPath string) (*Service, error) {
-	templateRepository, err := templatePkg.NewInMemoryRepository(baseAssetPath, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	fontRepository, err := fontPkg.NewInMemoryRepository(baseAssetPath, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	imageRepository, err := imagePkg.NewLocalRepository(baseAssetPath, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	upload, err := uploaderPkg.NewLocalUploader(baseAssetPath)
-	if err != nil {
-		return nil, err
-	}
-
+func NewService(
+	fontRepository fontPkg.Repository,
+	imageRepository imagePkg.Repository,
+	memeRepository Repository,
+	templateRepository templatePkg.Repository,
+	uploader uploaderPkg.Uploader,
+) *Service {
 	return &Service{
-		templateRepository: templateRepository,
 		fontRepository:     fontRepository,
 		imageRepository:    imageRepository,
-		uploader:           upload,
-	}, nil
+		memeRepository:     memeRepository,
+		templateRepository: templateRepository,
+		uploader:           uploader,
+	}
 }
 
 // CreateMeme creates an image.
@@ -75,17 +63,29 @@ func (s *Service) CreateMeme(template *templatePkg.Template, text []string) (ima
 }
 
 // CreateMemeAndUpload creates an image and uploads it.
-func (s *Service) CreateMemeAndUpload(template *templatePkg.Template, text []string) error {
+func (s *Service) CreateMemeAndUpload(template *templatePkg.Template, text []string) (*Meme, error) {
 	img, err := s.CreateMeme(template, text)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := s.uploader.UploadPNG("assets/memes/"+uuid.NewString(), img); err != nil {
-		return err
+	id := uuid.NewString()
+	path := "assets/memes/" + id
+	if err := s.uploader.UploadPNG(path, img); err != nil {
+		return nil, err
 	}
 
-	return nil
+	meme := &Meme{
+		ID:         id,
+		ImgPath:    "http://localhost:8080/" + path + ".png",
+		TemplateID: template.ID,
+		Text:       text,
+	}
+	if err := s.memeRepository.Create(meme); err != nil {
+		return nil, err
+	}
+
+	return meme, nil
 }
 
 // CreateMemeFromTemplateID creates an image using the provided templateID.
@@ -99,22 +99,13 @@ func (s *Service) CreateMemeFromTemplateID(templateID string, text []string) (im
 }
 
 // CreateMemeAndUploadFromTemplateID creates an image using the provided templateID.
-func (s *Service) CreateMemeAndUploadFromTemplateID(templateID string, text []string) error {
+func (s *Service) CreateMemeAndUploadFromTemplateID(templateID string, text []string) (*Meme, error) {
 	template, err := s.templateRepository.Get(templateID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	img, err := s.CreateMeme(template, text)
-	if err != nil {
-		return err
-	}
-
-	if err := s.uploader.UploadPNG("assets/memes/"+uuid.NewString(), img); err != nil {
-		return err
-	}
-
-	return nil
+	return s.CreateMemeAndUpload(template, text)
 }
 
 // drawTextField draws the full text object to the drawing context.

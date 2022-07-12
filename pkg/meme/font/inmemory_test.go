@@ -8,22 +8,24 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r, err := font.NewInMemoryRepository("", nil)
+	r := font.NewInMemoryRepository(font.DefaultTestFontPaths)
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*font.Repository)(nil), r)
-	assert.NoError(t, err)
 }
 
 func TestRepository_Get(t *testing.T) {
 	tests := map[string]struct {
+		paths map[string]string
 		name  string
 		error bool
 	}{
 		"valid": {
-			name: "Arial",
+			paths: font.DefaultTestFontPaths,
+			name:  "Arial",
 		},
 		"invalid": {
+			paths: font.DefaultTestFontPaths,
 			name:  "Fake",
 			error: true,
 		},
@@ -31,7 +33,7 @@ func TestRepository_Get(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := font.NewInMemoryRepository("../../../", nil)
+			r := font.NewInMemoryRepository(tc.paths)
 			textFont, err := r.Get(tc.name)
 
 			if !tc.error {
@@ -46,30 +48,18 @@ func TestRepository_Get(t *testing.T) {
 
 func TestRepository_GetPath(t *testing.T) {
 	tests := map[string]struct {
-		fonts        map[string]string
+		paths        map[string]string
 		name         string
 		expectedPath string
 		error        bool
 	}{
 		"valid": {
+			paths:        font.DefaultTestFontPaths,
 			name:         "Arial",
-			expectedPath: "assets/fonts/arial.ttf",
+			expectedPath: "../../../assets/fonts/arial.ttf",
 		},
 		"invalid": {
-			name:  "Fake",
-			error: true,
-		},
-		"valid with custom": {
-			fonts: map[string]string{
-				"Poppins": "my/custom/font/poppins.ttf",
-			},
-			name:         "Poppins",
-			expectedPath: "my/custom/font/poppins.ttf",
-		},
-		"invalid with custom": {
-			fonts: map[string]string{
-				"Poppins": "my/custom/font/poppins.ttf",
-			},
+			paths: font.DefaultTestFontPaths,
 			name:  "Fake",
 			error: true,
 		},
@@ -77,7 +67,7 @@ func TestRepository_GetPath(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := font.NewInMemoryRepository("", tc.fonts)
+			r := font.NewInMemoryRepository(tc.paths)
 			path, err := r.GetPath(tc.name)
 
 			if !tc.error {

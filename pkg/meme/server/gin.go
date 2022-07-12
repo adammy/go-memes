@@ -1,10 +1,10 @@
 package server
 
 import (
-	"github.com/adammy/go-memes/pkg/meme"
 	"net/http"
 	"strconv"
 
+	memePkg "github.com/adammy/go-memes/pkg/meme"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,17 +13,12 @@ var _ Server = (*ginServer)(nil)
 type ginServer struct {
 	config  Config
 	router  *gin.Engine
-	service *meme.Service
+	service *memePkg.Service
 }
 
 // NewGinServer returns a new Server utilizing the gin framework.
-func NewGinServer() (*ginServer, error) {
+func NewGinServer(svc *memePkg.Service) (*ginServer, error) {
 	r := gin.New()
-
-	svc, err := meme.NewService("")
-	if err != nil {
-		return nil, err
-	}
 
 	return &ginServer{
 		config: Config{
@@ -83,7 +78,7 @@ func (s *ginServer) createMemeFromTemplateIDHandler(ctx *gin.Context) {
 		return
 	}
 
-	var createMeme meme.CreateMemeFromTemplate
+	var createMeme memePkg.CreateMemeFromTemplate
 	if err := ctx.ShouldBind(&createMeme); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -91,7 +86,7 @@ func (s *ginServer) createMemeFromTemplateIDHandler(ctx *gin.Context) {
 		return
 	}
 
-	err := s.service.CreateMemeAndUploadFromTemplateID(templateID, createMeme.Text)
+	meme, err := s.service.CreateMemeAndUploadFromTemplateID(templateID, createMeme.Text)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -99,7 +94,5 @@ func (s *ginServer) createMemeFromTemplateIDHandler(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"status": "a+",
-	})
+	ctx.JSON(http.StatusOK, meme)
 }

@@ -3,7 +3,6 @@ package font
 import (
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 
 	"github.com/golang/freetype/truetype"
 )
@@ -17,29 +16,19 @@ type inMemoryRepository struct {
 }
 
 // NewInMemoryRepository constructs an inMemoryRepository.
-func NewInMemoryRepository(basePath string, paths map[string]string) (*inMemoryRepository, error) {
-	var (
-		resolvedPaths map[string]string
-	)
-	if paths != nil {
-		resolvedPaths = paths
-	} else {
-		resolvedPaths = DefaultFonts
-	}
-
+func NewInMemoryRepository(paths map[string]string) *inMemoryRepository {
 	fonts := map[string]*truetype.Font{}
-	for name, path := range resolvedPaths {
-		font, _ := getFont(filepath.Join(basePath, path))
+	for name, path := range paths {
+		font, _ := getFont(path)
 		if font != nil {
 			fonts[name] = font
 		}
 	}
 
 	return &inMemoryRepository{
-		basePath: basePath,
-		paths:    resolvedPaths,
-		fonts:    fonts,
-	}, nil
+		paths: paths,
+		fonts: fonts,
+	}
 }
 
 func (r *inMemoryRepository) Get(name string) (*truetype.Font, error) {
@@ -51,7 +40,7 @@ func (r *inMemoryRepository) Get(name string) (*truetype.Font, error) {
 
 func (r *inMemoryRepository) GetPath(name string) (string, error) {
 	if path, ok := r.paths[name]; ok {
-		return filepath.Join(r.basePath, path), nil
+		return path, nil
 	}
 	return "", fmt.Errorf("font path %s was not found", name)
 }

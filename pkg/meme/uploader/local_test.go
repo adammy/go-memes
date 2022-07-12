@@ -9,11 +9,10 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r, err := uploader.NewLocalUploader("")
+	r := uploader.NewLocalUploader()
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*uploader.Uploader)(nil), r)
-	assert.NoError(t, err)
 }
 
 func TestUploader_UploadPNG(t *testing.T) {
@@ -24,7 +23,7 @@ func TestUploader_UploadPNG(t *testing.T) {
 		error        bool
 	}{
 		"valid": {
-			path: "assets/memes/my-id",
+			path: "../../../assets/memes/my-id",
 			img: image.NewRGBA(image.Rectangle{
 				Min: image.Point{X: 0, Y: 0},
 				Max: image.Point{X: 1, Y: 1},
@@ -36,7 +35,7 @@ func TestUploader_UploadPNG(t *testing.T) {
 			error: true,
 		},
 		"invalid image": {
-			path:  "assets/memes/my-id",
+			path:  "../../../assets/memes/my-id",
 			img:   image.NewRGBA(image.Rectangle{}),
 			error: true,
 		},
@@ -44,7 +43,7 @@ func TestUploader_UploadPNG(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			u, _ := uploader.NewLocalUploader("../../../")
+			u := uploader.NewLocalUploader()
 			err := u.UploadPNG(tc.path, tc.img)
 
 			if !tc.error {

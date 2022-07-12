@@ -8,11 +8,10 @@ import (
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r, err := template.NewInMemoryRepository("", nil)
+	r := template.NewInMemoryRepository(template.DefaultTemplates)
 
 	assert.NotNil(t, r)
 	assert.Implements(t, (*template.Repository)(nil), r)
-	assert.NoError(t, err)
 }
 
 func TestRepository_Get(t *testing.T) {
@@ -22,20 +21,11 @@ func TestRepository_Get(t *testing.T) {
 		error     bool
 	}{
 		"valid": {
-			ID: "yall-got-any-more-of-them",
+			templates: template.DefaultTemplates,
+			ID:        "yall-got-any-more-of-them",
 		},
 		"invalid": {
-			ID:    "fake",
-			error: true,
-		},
-		"valid with custom": {
-			templates: map[string]*template.Template{
-				"muh-meme": {},
-			},
-			ID: "muh-meme",
-		},
-		"invalid with custom": {
-			templates: map[string]*template.Template{},
+			templates: template.DefaultTemplates,
 			ID:        "fake",
 			error:     true,
 		},
@@ -43,7 +33,7 @@ func TestRepository_Get(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := template.NewInMemoryRepository("", tc.templates)
+			r := template.NewInMemoryRepository(tc.templates)
 			tmpl, err := r.Get(tc.ID)
 
 			if !tc.error {
@@ -63,13 +53,14 @@ func TestRepository_Create(t *testing.T) {
 		error     bool
 	}{
 		"valid": {
-			ID: "muh-meme",
+			templates: template.DefaultTemplates,
+			ID:        "muh-meme",
 		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := template.NewInMemoryRepository("", tc.templates)
+			r := template.NewInMemoryRepository(tc.templates)
 			err := r.Create(&template.Template{
 				ID: tc.ID,
 			})
@@ -106,7 +97,7 @@ func TestRepository_Delete(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r, _ := template.NewInMemoryRepository("", tc.templates)
+			r := template.NewInMemoryRepository(tc.templates)
 			err := r.Delete(tc.ID)
 
 			if !tc.error {

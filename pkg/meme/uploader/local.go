@@ -4,23 +4,19 @@ import (
 	"image"
 	"image/png"
 	"os"
-	"path/filepath"
 )
 
 var _ Uploader = (*localUploader)(nil)
 
-type localUploader struct {
-	basePath string
-}
+type localUploader struct{}
 
 // NewLocalUploader constructs a localUploader.
-func NewLocalUploader(basePath string) (*localUploader, error) {
-	return &localUploader{basePath: basePath}, nil
+func NewLocalUploader() *localUploader {
+	return &localUploader{}
 }
 
 func (u *localUploader) UploadPNG(path string, img image.Image) error {
-	resolvedPath := filepath.Join(u.basePath, path+".png")
-	file, err := os.Create(resolvedPath)
+	file, err := os.Create(path + ".png")
 	if err != nil {
 		return err
 	}

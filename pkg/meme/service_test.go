@@ -4,14 +4,31 @@ import (
 	"testing"
 
 	"github.com/adammy/go-memes/pkg/meme"
+	"github.com/adammy/go-memes/pkg/meme/font"
+	"github.com/adammy/go-memes/pkg/meme/image"
+	"github.com/adammy/go-memes/pkg/meme/template"
+	uploaderPkg "github.com/adammy/go-memes/pkg/meme/uploader"
 	"github.com/stretchr/testify/assert"
 )
 
+var (
+	fontRepository     = font.NewInMemoryRepository(font.DefaultTestServiceFontPaths)
+	imageRepository    = image.NewLocalRepository(image.DefaultTestServiceImagePaths)
+	memeRepository     = meme.NewInMemoryRepository()
+	templateRepository = template.NewInMemoryRepository(template.DefaultTemplates)
+	uploader           = uploaderPkg.NewLocalUploader()
+)
+
 func TestNewService(t *testing.T) {
-	svc, err := meme.NewService("")
+	svc := meme.NewService(
+		fontRepository,
+		imageRepository,
+		memeRepository,
+		templateRepository,
+		uploader,
+	)
 
 	assert.NotNil(t, svc)
-	assert.NoError(t, err)
 }
 
 func TestService_CreateMemeFromTemplateID(t *testing.T) {
@@ -33,7 +50,13 @@ func TestService_CreateMemeFromTemplateID(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			svc, _ := meme.NewService("../../")
+			svc := meme.NewService(
+				fontRepository,
+				imageRepository,
+				memeRepository,
+				templateRepository,
+				uploader,
+			)
 			img, err := svc.CreateMemeFromTemplateID(tc.templateID, tc.text)
 
 			if !tc.error {
