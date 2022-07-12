@@ -10,9 +10,8 @@ import (
 var _ Repository = (*inMemoryRepository)(nil)
 
 type inMemoryRepository struct {
-	basePath string
-	paths    map[string]string
-	fonts    map[string]*truetype.Font
+	paths map[string]string
+	fonts map[string]*truetype.Font
 }
 
 // NewInMemoryRepository constructs an inMemoryRepository.
