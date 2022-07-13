@@ -1,0 +1,8 @@
+meme:
+  port: 8080
+  serve_local_assets: true
+  font_repository_type: InMemory
+  image_repository_type: Local
+  meme_repository_type: InMemory
+  template_repository_type: InMemory
+  uploader_type: Local

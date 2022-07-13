@@ -11,20 +11,17 @@ import (
 var _ Server = (*ginServer)(nil)
 
 type ginServer struct {
-	config  Config
+	config  *Config
 	router  *gin.Engine
 	service *memePkg.Service
 }
 
 // NewGinServer returns a new Server utilizing the gin framework.
-func NewGinServer(svc *memePkg.Service) (*ginServer, error) {
+func NewGinServer(cfg *Config, svc *memePkg.Service) (*ginServer, error) {
 	r := gin.New()
 
 	return &ginServer{
-		config: Config{
-			Port:        8080,
-			LocalAssets: true,
-		},
+		config:  cfg,
 		router:  r,
 		service: svc,
 	}, nil
@@ -50,7 +47,7 @@ func (s *ginServer) Start() error {
 }
 
 func (s *ginServer) registerRoutes() error {
-	if s.config.LocalAssets {
+	if s.config.ServeLocalAssets {
 		s.router.Static("/assets", "./assets")
 	}
 

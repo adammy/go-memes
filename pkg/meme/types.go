@@ -1,5 +1,11 @@
 package meme
 
+type RepositoryType string
+
+const (
+	InMemory RepositoryType = "InMemory"
+)
+
 // Meme defines a meme.
 type Meme struct {
 	// ID is a unique identifier for the meme.
