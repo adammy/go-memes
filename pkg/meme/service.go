@@ -6,8 +6,9 @@ import (
 
 	fontPkg "github.com/adammy/memepen-services/pkg/meme/font"
 	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
-	templatePkg "github.com/adammy/memepen-services/pkg/meme/template"
 	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
+	templatePkg "github.com/adammy/memepen-services/pkg/template"
+	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"github.com/google/uuid"
@@ -18,7 +19,7 @@ type Service struct {
 	fontRepository     fontPkg.Repository
 	imageRepository    imagePkg.Repository
 	memeRepository     Repository
-	templateRepository templatePkg.Repository
+	templateRepository templateRepositoryPkg.Repository
 	uploader           uploaderPkg.Uploader
 }
 
@@ -27,7 +28,7 @@ func NewService(
 	fontRepository fontPkg.Repository,
 	imageRepository imagePkg.Repository,
 	memeRepository Repository,
-	templateRepository templatePkg.Repository,
+	templateRepository templateRepositoryPkg.Repository,
 	uploader uploaderPkg.Uploader,
 ) *Service {
 	return &Service{

@@ -1,11 +1,5 @@
 package template
 
-type RepositoryType string
-
-const (
-	InMemory RepositoryType = "InMemory"
-)
-
 // Template defines a structure for creating a meme.
 type Template struct {
 	// ID is a unique identifier for the template.
