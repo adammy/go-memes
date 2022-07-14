@@ -1,6 +1,7 @@
 package main
 
 import (
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"image/png"
 	"os"
 	"strings"
@@ -8,7 +9,6 @@ import (
 	"github.com/adammy/memepen-services/pkg/meme"
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/adammy/memepen-services/pkg/template"
 	"github.com/adammy/memepen-services/pkg/template/repository"
 	"github.com/google/uuid"

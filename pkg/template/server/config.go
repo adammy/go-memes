@@ -4,8 +4,8 @@ import (
 	"github.com/adammy/memepen-services/pkg/meme"
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	"github.com/adammy/memepen-services/pkg/meme/image"
-	"github.com/adammy/memepen-services/pkg/meme/uploader"
 	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
+	"github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/spf13/viper"
 )
 
@@ -30,7 +30,7 @@ type Config struct {
 	TemplateRepositoryType templateRepositoryPkg.Type `mapstructure:"template_repository_type"`
 
 	// UploaderType defines the UploaderType.
-	UploaderType uploader.UploaderType `mapstructure:"uploader_type"`
+	UploaderType uploader.Type `mapstructure:"uploader_type"`
 }
 
 type configWrapper struct {

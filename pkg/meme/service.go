@@ -1,12 +1,12 @@
 package meme
 
 import (
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"image"
 	"math"
 
 	fontPkg "github.com/adammy/memepen-services/pkg/meme/font"
 	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	templatePkg "github.com/adammy/memepen-services/pkg/template"
 	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
 	"github.com/fogleman/gg"

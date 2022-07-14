@@ -3,12 +3,12 @@ package meme_test
 import (
 	template2 "github.com/adammy/memepen-services/pkg/template"
 	"github.com/adammy/memepen-services/pkg/template/repository"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"testing"
 
 	"github.com/adammy/memepen-services/pkg/meme"
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	"github.com/adammy/memepen-services/pkg/meme/image"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/stretchr/testify/assert"
 )
 
