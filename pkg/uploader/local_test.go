@@ -23,7 +23,7 @@ func TestLocalUploader_UploadPNG(t *testing.T) {
 		error        bool
 	}{
 		"valid": {
-			path: "../../../assets/memes/my-id",
+			path: "../../assets/memes/my-id",
 			img: image.NewRGBA(image.Rectangle{
 				Min: image.Point{X: 0, Y: 0},
 				Max: image.Point{X: 1, Y: 1},
@@ -35,7 +35,7 @@ func TestLocalUploader_UploadPNG(t *testing.T) {
 			error: true,
 		},
 		"invalid image": {
-			path:  "../../../assets/memes/my-id",
+			path:  "../../assets/memes/my-id",
 			img:   image.NewRGBA(image.Rectangle{}),
 			error: true,
 		},
