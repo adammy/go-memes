@@ -5,8 +5,9 @@ import (
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	"github.com/adammy/memepen-services/pkg/meme/image"
 	"github.com/adammy/memepen-services/pkg/meme/server"
-	"github.com/adammy/memepen-services/pkg/meme/template"
 	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
+	"github.com/adammy/memepen-services/pkg/template"
+	"github.com/adammy/memepen-services/pkg/template/repository"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 	fontRepository := font.NewRepository(config.FontRepositoryType, font.DefaultFontPaths)
 	imageRepository := image.NewRepository(config.ImageRepositoryType, image.DefaultImagePaths)
 	memeRepository := meme.NewRepository(config.MemeRepositoryType)
-	templateRepository := template.NewRepository(config.TemplateRepositoryType, template.DefaultTemplates)
+	templateRepository := repository.NewRepository(config.TemplateRepositoryType, template.DefaultTemplates)
 	uploader := uploaderPkg.NewUploader(config.UploaderType)
 	service := meme.NewService(
 		fontRepository,

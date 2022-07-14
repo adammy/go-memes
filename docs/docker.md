@@ -1,5 +1,5 @@
 ```shell
-docker build . -f cmd/server/Dockerfile -t memepen/meme
+docker build . -f cmd/meme/Dockerfile -t memepen/meme
 ```
 
 ```shell

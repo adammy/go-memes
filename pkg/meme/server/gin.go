@@ -5,10 +5,11 @@ import (
 	"strconv"
 
 	memePkg "github.com/adammy/memepen-services/pkg/meme"
+	"github.com/adammy/memepen-services/pkg/server"
 	"github.com/gin-gonic/gin"
 )
 
-var _ Server = (*ginServer)(nil)
+var _ server.Server = (*ginServer)(nil)
 
 type ginServer struct {
 	config  *Config

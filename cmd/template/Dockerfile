@@ -30,7 +30,7 @@ COPY . .
 RUN go mod download
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -ldflags="-w -s" -o /memepen-meme-svc cmd/server/server.go
+    go build -ldflags="-w -s" -o /memepen-template-svc cmd/template/server.go
 
 ############################
 # STEP 2 build a small image
@@ -45,7 +45,7 @@ COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
 # Copy the binary and it's dependencies.
-COPY --from=builder --chown=appuser:appuser /memepen-meme-svc /memepen-meme-svc
+COPY --from=builder --chown=appuser:appuser /memepen-template-svc /memepen-template-svc
 COPY --from=builder --chown=appuser:appuser /go/src/github.com/adammy/memepen-services/assets ./assets
 COPY --from=builder --chown=appuser:appuser /go/src/github.com/adammy/memepen-services/configs ./configs
 
@@ -54,4 +54,4 @@ USER appuser:appuser
 
 # Run the binary.
 EXPOSE 8080
-ENTRYPOINT ["/memepen-meme-svc"]
+ENTRYPOINT ["/memepen-template-svc"]

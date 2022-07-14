@@ -1,17 +1,18 @@
-package template_test
+package repository_test
 
 import (
 	"testing"
 
-	"github.com/adammy/memepen-services/pkg/meme/template"
+	"github.com/adammy/memepen-services/pkg/template"
+	"github.com/adammy/memepen-services/pkg/template/repository"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	r := template.NewInMemoryRepository(template.DefaultTemplates)
+	r := repository.NewInMemoryRepository(template.DefaultTemplates)
 
 	assert.NotNil(t, r)
-	assert.Implements(t, (*template.Repository)(nil), r)
+	assert.Implements(t, (*repository.Repository)(nil), r)
 }
 
 func TestInMemoryRepository_Get(t *testing.T) {
@@ -33,7 +34,7 @@ func TestInMemoryRepository_Get(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r := template.NewInMemoryRepository(tc.templates)
+			r := repository.NewInMemoryRepository(tc.templates)
 			tmpl, err := r.Get(tc.ID)
 
 			if !tc.error {
@@ -60,7 +61,7 @@ func TestInMemoryRepository_Create(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r := template.NewInMemoryRepository(tc.templates)
+			r := repository.NewInMemoryRepository(tc.templates)
 			err := r.Create(&template.Template{
 				ID: tc.ID,
 			})
@@ -97,7 +98,7 @@ func TestInMemoryRepository_Delete(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			r := template.NewInMemoryRepository(tc.templates)
+			r := repository.NewInMemoryRepository(tc.templates)
 			err := r.Delete(tc.ID)
 
 			if !tc.error {
