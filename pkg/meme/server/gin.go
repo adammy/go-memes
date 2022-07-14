@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	memePkg "github.com/adammy/go-memes/pkg/meme"
+	memePkg "github.com/adammy/memepen-services/pkg/meme"
 	"github.com/gin-gonic/gin"
 )
 
