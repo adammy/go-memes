@@ -1,18 +1,18 @@
 package uploader_test
 
 import (
-	uploader2 "github.com/adammy/memepen-services/pkg/uploader"
 	"image"
 	"testing"
 
+	"github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewInMemoryRepository(t *testing.T) {
-	u := uploader2.NewLocalUploader()
+	u := uploader.NewLocalUploader()
 
 	assert.NotNil(t, u)
-	assert.Implements(t, (*uploader2.Uploader)(nil), u)
+	assert.Implements(t, (*uploader.Uploader)(nil), u)
 }
 
 func TestLocalUploader_UploadPNG(t *testing.T) {
@@ -43,7 +43,7 @@ func TestLocalUploader_UploadPNG(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			u := uploader2.NewLocalUploader()
+			u := uploader.NewLocalUploader()
 			err := u.UploadPNG(tc.path, tc.img)
 
 			if !tc.error {

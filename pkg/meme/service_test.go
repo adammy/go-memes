@@ -1,14 +1,14 @@
 package meme_test
 
 import (
-	template2 "github.com/adammy/memepen-services/pkg/template"
-	"github.com/adammy/memepen-services/pkg/template/repository"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"testing"
 
 	"github.com/adammy/memepen-services/pkg/meme"
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	"github.com/adammy/memepen-services/pkg/meme/image"
+	"github.com/adammy/memepen-services/pkg/template"
+	"github.com/adammy/memepen-services/pkg/template/repository"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +16,7 @@ var (
 	fontRepository     = font.NewInMemoryRepository(font.DefaultTestServiceFontPaths)
 	imageRepository    = image.NewLocalRepository(image.DefaultTestServiceImagePaths)
 	memeRepository     = meme.NewInMemoryRepository()
-	templateRepository = repository.NewInMemoryRepository(template2.DefaultTemplates)
+	templateRepository = repository.NewInMemoryRepository(template.DefaultTemplates)
 	uploader           = uploaderPkg.NewNoopUploader()
 )
 

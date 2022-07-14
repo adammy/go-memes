@@ -1,7 +1,6 @@
 package meme
 
 import (
-	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"image"
 	"math"
 
@@ -9,6 +8,7 @@ import (
 	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
 	templatePkg "github.com/adammy/memepen-services/pkg/template"
 	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"github.com/google/uuid"
