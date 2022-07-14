@@ -3,7 +3,7 @@ package template_test
 import (
 	"testing"
 
-	"github.com/adammy/go-memes/pkg/meme/template"
+	"github.com/adammy/memepen-services/pkg/meme/template"
 	"github.com/stretchr/testify/assert"
 )
 

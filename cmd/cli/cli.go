@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/adammy/go-memes/pkg/meme"
-	"github.com/adammy/go-memes/pkg/meme/font"
-	imagePkg "github.com/adammy/go-memes/pkg/meme/image"
-	"github.com/adammy/go-memes/pkg/meme/template"
-	uploaderPkg "github.com/adammy/go-memes/pkg/meme/uploader"
+	"github.com/adammy/memepen-services/pkg/meme"
+	"github.com/adammy/memepen-services/pkg/meme/font"
+	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
+	"github.com/adammy/memepen-services/pkg/meme/template"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/google/uuid"
 )
 

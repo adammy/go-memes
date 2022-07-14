@@ -1,11 +1,11 @@
 package server
 
 import (
-	"github.com/adammy/go-memes/pkg/meme"
-	"github.com/adammy/go-memes/pkg/meme/font"
-	"github.com/adammy/go-memes/pkg/meme/image"
-	"github.com/adammy/go-memes/pkg/meme/template"
-	"github.com/adammy/go-memes/pkg/meme/uploader"
+	"github.com/adammy/memepen-services/pkg/meme"
+	"github.com/adammy/memepen-services/pkg/meme/font"
+	"github.com/adammy/memepen-services/pkg/meme/image"
+	"github.com/adammy/memepen-services/pkg/meme/template"
+	"github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/spf13/viper"
 )
 
