@@ -5,9 +5,9 @@ import (
 	"github.com/adammy/memepen-services/pkg/meme/font"
 	"github.com/adammy/memepen-services/pkg/meme/image"
 	"github.com/adammy/memepen-services/pkg/meme/server"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/adammy/memepen-services/pkg/template"
 	"github.com/adammy/memepen-services/pkg/template/repository"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 )
 
 func main() {

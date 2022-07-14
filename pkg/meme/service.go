@@ -6,9 +6,9 @@ import (
 
 	fontPkg "github.com/adammy/memepen-services/pkg/meme/font"
 	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 	templatePkg "github.com/adammy/memepen-services/pkg/template"
 	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"github.com/google/uuid"

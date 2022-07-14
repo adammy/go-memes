@@ -1,10 +1,11 @@
 package uploader_test
 
 import (
-	"github.com/adammy/memepen-services/pkg/meme/uploader"
-	"github.com/stretchr/testify/assert"
 	"image"
 	"testing"
+
+	"github.com/adammy/memepen-services/pkg/uploader"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewNoopUploader(t *testing.T) {
