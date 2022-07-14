@@ -4,7 +4,7 @@ import (
 	"image"
 	"testing"
 
-	"github.com/adammy/go-memes/pkg/meme/uploader"
+	"github.com/adammy/memepen-services/pkg/meme/uploader"
 	"github.com/stretchr/testify/assert"
 )
 

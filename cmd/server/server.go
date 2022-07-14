@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/adammy/go-memes/pkg/meme"
-	"github.com/adammy/go-memes/pkg/meme/font"
-	"github.com/adammy/go-memes/pkg/meme/image"
-	"github.com/adammy/go-memes/pkg/meme/server"
-	"github.com/adammy/go-memes/pkg/meme/template"
-	uploaderPkg "github.com/adammy/go-memes/pkg/meme/uploader"
+	"github.com/adammy/memepen-services/pkg/meme"
+	"github.com/adammy/memepen-services/pkg/meme/font"
+	"github.com/adammy/memepen-services/pkg/meme/image"
+	"github.com/adammy/memepen-services/pkg/meme/server"
+	"github.com/adammy/memepen-services/pkg/meme/template"
+	uploaderPkg "github.com/adammy/memepen-services/pkg/meme/uploader"
 )
 
 func main() {
