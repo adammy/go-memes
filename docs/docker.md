@@ -12,3 +12,8 @@ docker run --rm -ti -p 8080:8080 memepen/meme
 ```shell
 sh scripts/build-images.sh
 ```
+
+# DC Up
+```shell
+docker-compose -f build/docker-compose.yml up
+```

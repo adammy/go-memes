@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  meme:
+    image: memepen/meme
+    container_name: memepen_meme_service
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    #    env_file: .env
+#    environment:
+#      RACK_ENV: development
+#      SHOW: "true"
+#      USER_INPUT:
+    ports:
+      - "8080:8080"
+  template:
+    image: memepen/template
+    container_name: memepen_template_service
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "8081:8080"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: adam
+      POSTGRES_PASSWORD: almonds
+      POSTGRES_DB: memepen
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/postgres/data:/var/lib/postgresql/data
+      - ./db/postgres/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql

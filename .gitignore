@@ -58,3 +58,6 @@ Temporary Items
 # local memes
 assets/memes/*
 !assets/memes/.gitkeep
+
+# local postgres data volume
+db/postgres/data
