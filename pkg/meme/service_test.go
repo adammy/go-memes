@@ -1,23 +1,21 @@
 package meme_test
 
 import (
+	"github.com/adammy/memepen-services/pkg/font"
+	image2 "github.com/adammy/memepen-services/pkg/image"
+	"github.com/adammy/memepen-services/pkg/meme"
 	"testing"
 
-	"github.com/adammy/memepen-services/pkg/meme"
-	"github.com/adammy/memepen-services/pkg/meme/font"
-	"github.com/adammy/memepen-services/pkg/meme/image"
 	"github.com/adammy/memepen-services/pkg/template"
-	"github.com/adammy/memepen-services/pkg/template/repository"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	fontRepository     = font.NewInMemoryRepository(font.DefaultTestServiceFontPaths)
-	imageRepository    = image.NewLocalRepository(image.DefaultTestServiceImagePaths)
+	fontRepository     = font.NewLocalGetter(font.DefaultTestFontPaths)
+	imageRepository    = image2.NewLocalGetter(image2.DefaultTestImagePaths)
 	memeRepository     = meme.NewInMemoryRepository()
-	templateRepository = repository.NewInMemoryRepository(template.DefaultTemplates)
-	uploader           = uploaderPkg.NewNoopUploader()
+	templateRepository = template.NewInMemoryRepository(template.DefaultTemplates)
+	uploader           = image2.NewNoopUploader()
 )
 
 func TestNewService(t *testing.T) {

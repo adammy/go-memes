@@ -33,4 +33,5 @@ services:
       - "5432:5432"
     volumes:
       - ./db/postgres/data:/var/lib/postgresql/data
-      - ./db/postgres/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./db/postgres/0-create-tables.sql:/docker-entrypoint-initdb.d/0-create-tables.sql
+      - ./db/postgres/1-insert-data.sql:/docker-entrypoint-initdb.d/1-insert-data.sql
