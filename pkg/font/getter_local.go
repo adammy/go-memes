@@ -1,7 +1,6 @@
 package font
 
 import (
-	"fmt"
 	"io/ioutil"
 
 	"github.com/golang/freetype/truetype"
@@ -34,14 +33,14 @@ func (r *localGetter) Get(name string) (*truetype.Font, error) {
 	if font, ok := r.fonts[name]; ok {
 		return font, nil
 	}
-	return nil, fmt.Errorf("font %s was not found", name)
+	return nil, ErrNotFound
 }
 
 func (r *localGetter) GetPath(name string) (string, error) {
 	if path, ok := r.paths[name]; ok {
 		return path, nil
 	}
-	return "", fmt.Errorf("font path %s was not found", name)
+	return "", ErrNotFound
 }
 
 func getFont(path string) (*truetype.Font, error) {

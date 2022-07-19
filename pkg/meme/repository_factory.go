@@ -5,6 +5,8 @@ func NewRepository(t RepositoryType) Repository {
 	switch t {
 	case InMemoryRepository:
 		return NewInMemoryRepository()
+	case PostgresRepository:
+		return NewInMemoryRepository()
 	}
 	return NewInMemoryRepository()
 }

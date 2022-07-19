@@ -1,12 +1,12 @@
 package meme
 
 import (
-	fontPkg "github.com/adammy/memepen-services/pkg/font"
-	imagePkg "github.com/adammy/memepen-services/pkg/image"
 	"image"
 	"math"
 	"time"
 
+	fontPkg "github.com/adammy/memepen-services/pkg/font"
+	imagePkg "github.com/adammy/memepen-services/pkg/image"
 	templatePkg "github.com/adammy/memepen-services/pkg/template"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
@@ -48,8 +48,9 @@ func (s *Service) CreateMeme(template *templatePkg.Template, text []string) (ima
 
 	dc := gg.NewContextForImage(img)
 
-	for i, style := range template.TextStyles {
-		font, err := s.fontRepository.Get(style.Font.Family)
+	for i, textStyle := range template.TextStyles {
+		style := textStyle
+		font, err := s.fontRepository.Get(textStyle.Font.Family)
 		if err != nil {
 			return nil, err
 		}

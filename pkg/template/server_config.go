@@ -1,6 +1,8 @@
 package template
 
 import (
+	"fmt"
+
 	"github.com/adammy/memepen-services/pkg/image"
 	"github.com/spf13/viper"
 )
@@ -25,9 +27,7 @@ type configWrapper struct {
 }
 
 func LoadConfig(path, env string) (*Config, error) {
-	var (
-		config configWrapper
-	)
+	var config configWrapper
 
 	viper.SetDefault("template.port", 8080)
 	viper.SetDefault("template.image_repository_type", image.LocalGetter)
@@ -41,7 +41,7 @@ func LoadConfig(path, env string) (*Config, error) {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("read config: %w", err)
 	}
 
 	if err := viper.Unmarshal(&config); err != nil {

@@ -1,10 +1,11 @@
 package template
 
 import (
-	http2 "github.com/adammy/memepen-services/pkg/http"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	http2 "github.com/adammy/memepen-services/pkg/http"
+	"github.com/gin-gonic/gin"
 )
 
 var _ http2.Server = (*ginServer)(nil)

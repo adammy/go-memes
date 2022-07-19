@@ -23,8 +23,21 @@ func main() {
 		uploader,
 	)
 
-	_, err := svc.CreateMemeAndUploadFromTemplateID("yall-got-any-more-of-them", []string{strings.ToUpper("Y'all Got Any More Of Them"), strings.ToUpper("Ape JPEGs")})
-	// _, err := svc.CreateMemeFromTemplateID("two-buttons", []string{"me telling gordo im quitting", "me just disappearing", strings.ToUpper("Dav")})
+	_, err := svc.CreateMemeAndUploadFromTemplateID(
+		"yall-got-any-more-of-them",
+		[]string{
+			strings.ToUpper("Y'all Got Any More Of Them"),
+			strings.ToUpper("Ape JPEGs"),
+		},
+	)
+	//_, err := svc.CreateMemeAndUploadFromTemplateID(
+	//	"two-buttons",
+	//	[]string{
+	//		"me telling gordo im quitting",
+	//		"me just disappearing",
+	//		strings.ToUpper("Dav"),
+	//	},
+	//)
 	if err != nil {
 		panic(err)
 	}

@@ -1,9 +1,5 @@
 package template
 
-import (
-	"fmt"
-)
-
 var _ Repository = (*inMemoryRepository)(nil)
 
 type inMemoryRepository struct {
@@ -21,7 +17,7 @@ func (r *inMemoryRepository) Get(id string) (*Template, error) {
 	if template, ok := r.templates[id]; ok {
 		return template, nil
 	}
-	return nil, fmt.Errorf("template %s was not found", id)
+	return nil, ErrNotFound
 }
 
 func (r *inMemoryRepository) Create(template *Template) error {
@@ -34,5 +30,5 @@ func (r *inMemoryRepository) Delete(id string) error {
 		delete(r.templates, id)
 		return nil
 	}
-	return fmt.Errorf("template %s was not found", id)
+	return ErrNotFound
 }
