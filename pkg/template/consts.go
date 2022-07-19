@@ -1,17 +1,35 @@
 package template
 
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
+
+const (
+	// InMemoryRepository denotes to use an in-memory map for templates.
+	InMemoryRepository RepositoryType = "InMemoryRepository"
+
+	// PostgresRepository denotes to use a postgres db for templates.
+	PostgresRepository RepositoryType = "PostgresRepository"
+)
+
 var (
 	// DefaultTemplates defines the templates available for memes.
 	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
-			ID:          "yall-got-any-more-of-them",
-			Slug:        "yall-got-any-more-of-them",
-			Name:        "Y'all Got Any More of Them",
-			ImgID:       "yall-got-any-more-of-them",
-			Width:       600,
-			Height:      471,
-			DefaultText: []string{"Y'all Got Any More of Them", "Something"},
-			TextStyle: []TextStyle{
+			ID:        "yall-got-any-more-of-them",
+			Slug:      "yall-got-any-more-of-them",
+			Name:      "Y'all Got Any More of Them",
+			NSFW:      false,
+			CreatedOn: time.Now(),
+			UserID:    uuid.NewString(),
+			Image: Image{
+				ID:     "yall-got-any-more-of-them",
+				Width:  600,
+				Height: 471,
+			},
+			TextStyles: []TextStyle{
 				{
 					X:     10,
 					Y:     10,
@@ -41,16 +59,21 @@ var (
 					},
 				},
 			},
+			DefaultText: []string{"Y'all Got Any More of Them", "Something"},
 		},
 		"two-buttons": {
-			ID:          "two-buttons",
-			Slug:        "yall-got-any-more-of-them",
-			Name:        "Two Buttons",
-			ImgID:       "two-buttons",
-			Width:       500,
-			Height:      756,
-			DefaultText: []string{"Option 1", "Option 2", "Person Deciding"},
-			TextStyle: []TextStyle{
+			ID:        "two-buttons",
+			Slug:      "yall-got-any-more-of-them",
+			Name:      "Two Buttons",
+			NSFW:      false,
+			CreatedOn: time.Now(),
+			UserID:    uuid.NewString(),
+			Image: Image{
+				ID:     "two-buttons",
+				Width:  500,
+				Height: 756,
+			},
+			TextStyles: []TextStyle{
 				{
 					X:     80,
 					Y:     110,
@@ -92,6 +115,7 @@ var (
 					},
 				},
 			},
+			DefaultText: []string{"Option 1", "Option 2", "Person Deciding"},
 		},
 	}
 )

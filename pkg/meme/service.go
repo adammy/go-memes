@@ -1,14 +1,13 @@
 package meme
 
 import (
+	fontPkg "github.com/adammy/memepen-services/pkg/font"
+	imagePkg "github.com/adammy/memepen-services/pkg/image"
 	"image"
 	"math"
+	"time"
 
-	fontPkg "github.com/adammy/memepen-services/pkg/meme/font"
-	imagePkg "github.com/adammy/memepen-services/pkg/meme/image"
 	templatePkg "github.com/adammy/memepen-services/pkg/template"
-	templateRepositoryPkg "github.com/adammy/memepen-services/pkg/template/repository"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"github.com/google/uuid"
@@ -16,20 +15,20 @@ import (
 
 // Service contains functionality related to creating Meme objects.
 type Service struct {
-	fontRepository     fontPkg.Repository
-	imageRepository    imagePkg.Repository
+	fontRepository     fontPkg.Getter
+	imageRepository    imagePkg.Getter
 	memeRepository     Repository
-	templateRepository templateRepositoryPkg.Repository
-	uploader           uploaderPkg.Uploader
+	templateRepository templatePkg.Repository
+	uploader           imagePkg.Uploader
 }
 
 // NewService constructs Service.
 func NewService(
-	fontRepository fontPkg.Repository,
-	imageRepository imagePkg.Repository,
+	fontRepository fontPkg.Getter,
+	imageRepository imagePkg.Getter,
 	memeRepository Repository,
-	templateRepository templateRepositoryPkg.Repository,
-	uploader uploaderPkg.Uploader,
+	templateRepository templatePkg.Repository,
+	uploader imagePkg.Uploader,
 ) *Service {
 	return &Service{
 		fontRepository:     fontRepository,
@@ -42,14 +41,14 @@ func NewService(
 
 // CreateMeme creates an image.
 func (s *Service) CreateMeme(template *templatePkg.Template, text []string) (image.Image, error) {
-	img, err := s.imageRepository.Get(template.ImgID)
+	img, err := s.imageRepository.Get(template.Image.ID)
 	if err != nil {
 		return nil, err
 	}
 
 	dc := gg.NewContextForImage(img)
 
-	for i, style := range template.TextStyle {
+	for i, style := range template.TextStyles {
 		font, err := s.fontRepository.Get(style.Font.Family)
 		if err != nil {
 			return nil, err
@@ -77,10 +76,17 @@ func (s *Service) CreateMemeAndUpload(template *templatePkg.Template, text []str
 	}
 
 	meme := &Meme{
-		ID:         id,
-		ImgPath:    "http://localhost:8080/" + path + ".png",
-		TemplateID: template.ID,
+		ID: id,
+		Image: Image{
+			Path:   "http://localhost:8080/" + path + ".png",
+			Width:  template.Image.Width,
+			Height: template.Image.Height,
+		},
+		NSFW:       false,
+		CreatedOn:  time.Now(),
 		Text:       text,
+		UserID:     uuid.NewString(),
+		TemplateID: template.ID,
 	}
 	if err := s.memeRepository.Create(meme); err != nil {
 		return nil, err

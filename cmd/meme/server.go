@@ -1,26 +1,23 @@
 package main
 
 import (
+	"github.com/adammy/memepen-services/pkg/font"
+	"github.com/adammy/memepen-services/pkg/image"
 	"github.com/adammy/memepen-services/pkg/meme"
-	"github.com/adammy/memepen-services/pkg/meme/font"
-	"github.com/adammy/memepen-services/pkg/meme/image"
-	"github.com/adammy/memepen-services/pkg/meme/server"
 	"github.com/adammy/memepen-services/pkg/template"
-	"github.com/adammy/memepen-services/pkg/template/repository"
-	uploaderPkg "github.com/adammy/memepen-services/pkg/uploader"
 )
 
 func main() {
-	config, err := server.LoadConfig("./configs", "local")
+	config, err := meme.LoadConfig("./configs", "local")
 	if err != nil {
 		panic(err)
 	}
 
-	fontRepository := font.NewRepository(config.FontRepositoryType, font.DefaultFontPaths)
-	imageRepository := image.NewRepository(config.ImageRepositoryType, image.DefaultImagePaths)
+	fontRepository := font.NewGetter(config.FontRepositoryType, font.DefaultFontPaths)
+	imageRepository := image.NewGetter(config.ImageRepositoryType, image.DefaultImagePaths)
 	memeRepository := meme.NewRepository(config.MemeRepositoryType)
-	templateRepository := repository.NewRepository(config.TemplateRepositoryType, template.DefaultTemplates)
-	uploader := uploaderPkg.NewUploader(config.UploaderType)
+	templateRepository := template.NewRepository(config.TemplateRepositoryType, template.DefaultTemplates)
+	uploader := image.NewUploader(config.UploaderType)
 	service := meme.NewService(
 		fontRepository,
 		imageRepository,
@@ -29,7 +26,7 @@ func main() {
 		uploader,
 	)
 
-	s, err := server.NewGinServer(config, service)
+	s, err := meme.NewGinServer(config, service)
 	if err != nil {
 		panic(err)
 	}

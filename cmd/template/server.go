@@ -1,16 +1,16 @@
 package main
 
 import (
-	"github.com/adammy/memepen-services/pkg/template/server"
+	"github.com/adammy/memepen-services/pkg/template"
 )
 
 func main() {
-	config, err := server.LoadConfig("./configs", "local")
+	config, err := template.LoadConfig("./configs", "local")
 	if err != nil {
 		panic(err)
 	}
 
-	s, err := server.NewGinServer(config)
+	s, err := template.NewGinServer(config)
 	if err != nil {
 		panic(err)
 	}
