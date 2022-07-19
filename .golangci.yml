@@ -1,0 +1,58 @@
+# https://golangci-lint.run/usage/linters/
+linters:
+  enable:
+    # Defaults
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+
+    # Our opt-ins
+    - asciicheck
+    - bodyclose
+    - contextcheck
+    - cyclop
+    - decorder
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exhaustive
+    - funlen
+    - gci
+    - gochecknoinits
+    - goconst
+    - gofmt
+    # - gomnd # magic nums
+    - gosec
+    - lll
+    - nilnil
+    - noctx
+    - sqlclosecheck
+    - testpackage
+    - varnamelen
+
+linters-settings:
+
+  # https://github.com/blizzy78/varnamelen
+  varnamelen:
+    ignore-names:
+      - tc
+      - x
+      - y
+      - i
+      - id
+      - dc
+      - fn
+    ignore-decls:
+      - x int
+      - y int

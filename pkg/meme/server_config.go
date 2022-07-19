@@ -36,9 +36,7 @@ type configWrapper struct {
 }
 
 func LoadConfig(path, env string) (*Config, error) {
-	var (
-		config configWrapper
-	)
+	var config configWrapper
 
 	viper.SetDefault("meme.port", 8080)
 	viper.SetDefault("meme.serve_local_assets", false)
