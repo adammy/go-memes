@@ -14,6 +14,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -46,6 +47,9 @@ require (
 
 require (
 	github.com/fogleman/gg v1.3.0
+	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/httplog v0.2.4
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+	github.com/rs/zerolog v1.27.0
 	github.com/spf13/viper v1.12.0
 )

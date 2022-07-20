@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	http2 "github.com/adammy/memepen-services/pkg/http"
+	"github.com/adammy/memepen-services/pkg/httpapi"
 	"github.com/gin-gonic/gin"
 )
 
-var _ http2.Server = (*ginServer)(nil)
+var _ httpapi.Server = (*ginServer)(nil)
 
 type ginServer struct {
 	config *Config
