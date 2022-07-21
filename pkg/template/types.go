@@ -2,6 +2,9 @@ package template
 
 import (
 	"time"
+
+	"github.com/adammy/memepen-services/pkg/httpapi"
+	"github.com/adammy/memepen-services/pkg/image"
 )
 
 // RepositoryType denotes the type of Repository to use for templates.
@@ -95,4 +98,22 @@ type Stroke struct {
 type Rotation struct {
 	// Degrees defines the number of degrees to rotate the text.
 	Degrees int16 `json:"degrees"`
+}
+
+// Config defines configuration for the Server.
+type Config struct {
+	httpapi.ServerConfig `mapstructure:"server"`
+
+	// TemplateRepositoryType defines the GetterType for templates.
+	TemplateRepositoryType RepositoryType `mapstructure:"template_repository_type"`
+
+	// ImageGetterType defines the GetterType for template images.
+	ImageGetterType image.GetterType `mapstructure:"image_getter_type"`
+
+	// ImageUploaderType defines the ImageUploaderType.
+	ImageUploaderType image.UploaderType `mapstructure:"image_uploader_type"`
+}
+
+type ConfigWrapper struct {
+	Template Config `mapstructure:"template"`
 }

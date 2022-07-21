@@ -6,3 +6,17 @@ meme:
   meme_repository_type: InMemory
   template_repository_type: InMemory
   uploader_type: Local
+
+template:
+  server:
+    port: 8081
+    type: Chi
+    logger:
+      json: true
+      app_name: memepen-templates
+      app_version: 0.0.1
+      env_name: local
+      level: info
+  template_repository_type: InMemory
+  image_getter_type: Local
+  image_uploader_type: Local

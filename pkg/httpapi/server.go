@@ -1,4 +1,4 @@
-package http
+package httpapi
 
 // Server defines the interface for a server.
 type Server interface {

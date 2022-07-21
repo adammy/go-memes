@@ -1,9 +1,5 @@
 package meme
 
-import (
-	"fmt"
-)
-
 var _ Repository = (*inMemoryRepository)(nil)
 
 type inMemoryRepository struct {
@@ -21,7 +17,7 @@ func (r *inMemoryRepository) Get(id string) (*Meme, error) {
 	if meme, ok := r.memes[id]; ok {
 		return meme, nil
 	}
-	return nil, fmt.Errorf("meme %s was not found", id)
+	return nil, ErrNotFound
 }
 
 func (r *inMemoryRepository) Create(meme *Meme) error {
@@ -34,5 +30,5 @@ func (r *inMemoryRepository) Delete(id string) error {
 		delete(r.memes, id)
 		return nil
 	}
-	return fmt.Errorf("meme %s was not found", id)
+	return ErrNotFound
 }
