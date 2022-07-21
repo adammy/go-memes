@@ -34,27 +34,23 @@ func (s *chiServer) Start() error {
 	s.router.Use(middleware.Heartbeat("/ping"))
 	s.router.Use(middleware.RequestID)
 	s.router.Use(middleware.RealIP)
-	s.router.Use(httplog.RequestLogger(logger))
 	s.router.Use(middleware.Recoverer)
 	s.router.Use(middleware.Timeout(20 * time.Second))
+	s.router.Use(httplog.RequestLogger(logger))
 
-	if err := s.registerRoutes(); err != nil {
-		return err
-	}
+	s.registerRoutes()
 
-	if err := http.ListenAndServe(":"+strconv.Itoa(int(s.config.Port)), s.router); err != nil {
+	if err := http.ListenAndServe(":"+strconv.Itoa(s.config.Port), s.router); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *chiServer) registerRoutes() error {
+func (s *chiServer) registerRoutes() {
 	s.router.Route("/v1", func(r chi.Router) {
 		r.Get("/hello", s.otherHandler)
 	})
-
-	return nil
 }
 
 func (s *chiServer) otherHandler(w http.ResponseWriter, r *http.Request) {
