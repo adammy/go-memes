@@ -2,7 +2,7 @@ INSERT INTO profile (id, username, email) VALUES
 ('986a28ad-91d8-4454-8fae-1d1bfa2a14a9', 'adammy', 'adam@adammy.com'),
 ('d4e301d5-0cfa-4915-9e35-5084bc3a6b66', 'jesus', 'jesus@gmail.com');
 
-INSERT INTO base_image (id, img_path) VALUES
+INSERT INTO image (id, img_path) VALUES
 ('4cd223c2-6022-4bbf-aff1-e254548d5f71', 'assets/templates/yall-got-any-more-of-that.png'),
 ('41190721-022b-4cf5-ba45-b6f288ad78ce', 'assets/templates/two-buttons.png');
 

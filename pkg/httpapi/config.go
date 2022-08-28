@@ -6,15 +6,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig[Cfg comparable](path, env string, defaults map[string]interface{}) (*Cfg, error) {
-	var config Cfg
-
-	for k, v := range defaults {
-		viper.SetDefault(k, v)
-	}
+func LoadConfig[Config comparable](path, app string) (*Config, error) {
+	var config Config
 
 	viper.AddConfigPath(path)
-	viper.SetConfigName(env)
+	viper.SetConfigName(app)
 	viper.SetConfigType("yml")
 	viper.AutomaticEnv()
 

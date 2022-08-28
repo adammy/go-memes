@@ -1,0 +1,11 @@
+server:
+  port: 8080
+  request_timeout: 7000000000
+  logger:
+    json: false
+    app_name: memepen-template
+    app_version: 1.0.0
+    env_name: local
+    level: info
+
+repository_type: InMemory

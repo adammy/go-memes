@@ -1,3 +1,121 @@
-openapi: 3.0.0
+openapi: 3.0.3
+
+info:
+  title: Meme Service
+  description: The Meme Service provides operations for getting, creating, and deleting memes.
+  version: 1.0.0
+
 servers:
-  - url: http://api.memepen.com/meme/v1
+  - url: http://localhost:8080/v1
+  - url: https://meme.api.memepen.com/v1
+
+paths:
+  /memes/{memeID}:
+    get:
+      operationId: getMeme
+      summary: Get Meme
+      description: GetMeme retrieves the requested Meme.
+      tags:
+        - Meme
+      parameters:
+        - in: path
+          name: memeID
+          required: true
+          schema:
+            type: string
+            description: MemeID is the ID of the requested Meme.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meme'
+  /memes:
+    post:
+      operationId: createMeme
+      summary: Create Meme
+      description: CreateMeme creates a new Meme.
+      tags:
+        - Meme
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMeme'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meme'
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+
+components:
+  schemas:
+    Meme:
+      type: object
+      description: Meme defines a structure for a meme.
+      required:
+        - id
+        - url
+        - createdOn
+        - imageId
+        - text
+      properties:
+        id:
+          type: string
+          description: ID is a unique identifier for the Meme.
+          format: uuid
+          x-go-name: ID
+          x-go-type: string
+        url:
+          type: string
+          description: URL is the full URL to the Meme image.
+          format: uri
+          x-go-name: URL
+        createdOn:
+          type: string
+          description: CreatedOn defines the date/time the Meme was created.
+          format: date-time
+        imageId:
+          type: string
+          description: ImageID is the unique identifier of the base image used for the Meme.
+          format: uuid
+          x-go-name: ImageID
+          x-go-type: string
+        text:
+          type: array
+          description: Text is the text used in the Meme.
+          items:
+            type: string
+    CreateMeme:
+      type: object
+      description: CreateMeme defines a structure for creating a Meme.
+      required:
+        - imageId
+        - text
+        - textStyles
+      properties:
+        imageId:
+          type: string
+          description: ImageID is the unique identifier of the base image used for the Meme.
+          format: uuid
+          x-go-name: ImageID
+          x-go-type: string
+        text:
+          type: array
+          description: Text is the text used in the Meme.
+          items:
+            type: string
+        textStyles:
+          type: array
+          description: TextStyles is the text field styling for this Meme.
+          items:
+            type: object
+            x-go-type: template.TextStyle

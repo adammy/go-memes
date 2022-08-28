@@ -4,9 +4,6 @@ import (
 	"time"
 )
 
-// ServerType denotes the implementation of the Server interface.
-type ServerType string
-
 // LogLevel denotes the log level to use (e.g. ["trace", "debug", "info", "warn", "error", "critical"]).
 type LogLevel string
 
@@ -14,6 +11,7 @@ type LogLevel string
 type Error struct {
 	Error     string    `json:"error"`
 	Timestamp time.Time `json:"time"`
+	RequestID *string   `json:"requestId,omitempty"`
 }
 
 // ServerConfig defines configuration for the Server.
@@ -21,8 +19,8 @@ type ServerConfig struct {
 	// Port defines the port the server runs on.
 	Port int `mapstructure:"port"`
 
-	// Type defines the implementation of Server.
-	Type ServerType `mapstructure:"type"`
+	// RequestTimeout defines the duration for requests to timeout in nanoseconds.
+	RequestTimeout time.Duration `mapstructure:"request_timeout"`
 
 	// Logger defines configuration for the HTTP logger.
 	Logger LoggerConfig `mapstructure:"logger"`

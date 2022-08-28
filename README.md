@@ -10,6 +10,6 @@ The goal of Memepen is to provide a fast and pleasant experience for creating an
 ## Docs
 
 - [Configuration](docs/config.md)
-- [API Specs](api/meme.yml)
+- [API Specs](api/example.yml)
 - [Running with Docker](docs/docker.md)
 - [Running Locally](docs/local.md)
