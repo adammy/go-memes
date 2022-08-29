@@ -4,22 +4,20 @@ import (
 	"testing"
 
 	"github.com/adammy/memepen-services/pkg/font"
-	"github.com/adammy/memepen-services/pkg/image"
-	"github.com/adammy/memepen-services/pkg/meme"
-	"github.com/adammy/memepen-services/pkg/template"
+	"github.com/adammy/memepen-services/pkg/memeold"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
 	fontRepository     = font.NewLocalGetter(font.DefaultTestFontPaths)
-	imageRepository    = image.NewLocalGetter(image.DefaultTestImagePaths)
-	memeRepository     = meme.NewInMemoryRepository()
-	templateRepository = template.NewInMemoryRepository(template.DefaultTemplates)
-	uploader           = image.NewNoopUploader()
+	imageRepository    = imageold.NewLocalGetter(imageold.DefaultTestImagePaths)
+	memeRepository     = memeold.NewInMemoryRepository()
+	templateRepository = templateold.NewInMemoryRepository(templateold.DefaultTemplates)
+	uploader           = imageold.NewNoopUploader()
 )
 
 func TestNewService(t *testing.T) {
-	svc := meme.NewService(
+	svc := memeold.NewService(
 		fontRepository,
 		imageRepository,
 		memeRepository,
@@ -49,7 +47,7 @@ func TestService_CreateMemeFromTemplateID(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			svc := meme.NewService(
+			svc := memeold.NewService(
 				fontRepository,
 				imageRepository,
 				memeRepository,

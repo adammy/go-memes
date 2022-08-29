@@ -1,6 +1,7 @@
 package template_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/adammy/memepen-services/pkg/template"
@@ -34,7 +35,7 @@ func TestInMemoryRepository_Get(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			r := template.NewInMemoryRepository(tc.templates)
-			tmpl, err := r.Get(tc.ID)
+			tmpl, err := r.Get(context.Background(), tc.ID)
 
 			if !tc.error {
 				assert.NotNil(t, tmpl)
@@ -61,7 +62,7 @@ func TestInMemoryRepository_Create(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			r := template.NewInMemoryRepository(tc.templates)
-			err := r.Create(&template.Template{
+			err := r.Create(context.Background(), &template.Template{
 				ID: tc.ID,
 			})
 
@@ -98,7 +99,7 @@ func TestInMemoryRepository_Delete(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			r := template.NewInMemoryRepository(tc.templates)
-			err := r.Delete(tc.ID)
+			err := r.Delete(context.Background(), tc.ID)
 
 			if !tc.error {
 				assert.NoError(t, err)

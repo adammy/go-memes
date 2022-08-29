@@ -1,20 +1,24 @@
 package httpapi
 
 const (
-	// ChiServerType denotes the Server was implemented with Chi.
-	ChiServerType ServerType = "Chi"
-
-	// GinServerType denotes the Server was implemented with Gin.
-	GinServerType ServerType = "Gin"
-
-	// StdLibServerType denotes the Server was implemented with the standard library.
-	StdLibServerType ServerType = "StdLib"
-
 	// ContentTypeHeader is the "Content-Type" header key.
 	ContentTypeHeader = "Content-Type"
 
 	// ApplicationJson is the "application/json" header value for ContentTypeHeader.
 	ApplicationJson = "application/json"
+
+	// MultipartFormData is the "multipart/form-data" header value for ContentTypeHeader.
+	// If checking for this value, use strings.HasPrefix since it typically has additional content after.
+	MultipartFormData = "multipart/form-data"
+
+	// ImagePNG is the "image/png" header value for ContentTypeHeader.
+	ImagePNG = "image/png"
+
+	// ImageJPG is the "image/jpg" header value for ContentTypeHeader.
+	ImageJPG = "image/jpg"
+
+	// ImageJPEG is the "image/jpeg" header value for ContentTypeHeader.
+	ImageJPEG = "image/jpeg"
 
 	// TraceLogLevel denotes to show trace and all log levels below.
 	TraceLogLevel LogLevel = "trace"
@@ -33,4 +37,16 @@ const (
 
 	// CriticalLogLevel denotes to show critical logs only.
 	CriticalLogLevel LogLevel = "critical"
+
+	// EnvFlag defines the incoming flag to determine the Server environment.
+	EnvFlag = "env"
+
+	// EnvFlagDefault defines the default value for EnvFlag.
+	EnvFlagDefault = "local"
+
+	// EnvFlagDescription provides a description for EnvFlag.
+	EnvFlagDescription = "the environment for the application"
+
+	// ConfigPath defines the path for getting Server config.
+	ConfigPath = "./configs"
 )

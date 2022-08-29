@@ -1,0 +1,10 @@
+package {{.name}}
+
+import (
+	"github.com/adammy/memepen-services/pkg/httpapi"
+)
+
+// Config defines configuration for the Server.
+type Config struct {
+	httpapi.ServerConfig `mapstructure:"server"`
+}

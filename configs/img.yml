@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  request_timeout: 7000000000
+  logger:
+    json: false
+    app_name: memepen-image
+    app_version: 1.0.0
+    env_name: local
+    level: info
+
+repository_type: InMemory
+uploader_type: Local
+uploader_base_path: "assets/images/"
+base_url: http://localhost:8080/images/
+max_size: 5242880 # 5 MB, which is 1024 * 1024 * 5
+max_width: 2000
+max_height: 2000

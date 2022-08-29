@@ -3,8 +3,8 @@ package template
 import (
 	"time"
 
-	"github.com/adammy/memepen-services/pkg/image"
-	"github.com/google/uuid"
+	"github.com/adammy/memepen-services/pkg/color"
+	"github.com/adammy/memepen-services/pkg/pointer"
 )
 
 const (
@@ -16,112 +16,69 @@ const (
 )
 
 var (
-	// DefaultConfig defines the defaults for Config.
-	DefaultConfig = map[string]interface{}{
-		"template.server.port":              8081,
-		"template.template_repository_type": InMemoryRepository,
-		"template.image_getter_type":        image.LocalGetter,
-		"template.image_uploader_type":      image.LocalUploader,
-	}
-
-	// DefaultTemplates defines the templates available for memes.
 	DefaultTemplates = map[string]*Template{
 		"yall-got-any-more-of-them": {
 			ID:        "yall-got-any-more-of-them",
-			Slug:      "yall-got-any-more-of-them",
 			Name:      "Y'all Got Any More of Them",
-			NSFW:      false,
 			CreatedOn: time.Now(),
-			UserID:    uuid.NewString(),
-			Image: Image{
-				ID:     "yall-got-any-more-of-them",
-				Width:  600,
-				Height: 471,
-			},
+			ImageID:   "yall-got-any-more-of-them",
 			TextStyles: []TextStyle{
 				{
-					X:     10,
-					Y:     10,
-					Width: 580,
-					Font: Font{
-						Family: "Impact",
-						Size:   40,
-						Color:  "#FFFFFF",
-					},
-					Stroke: &Stroke{
-						Size:  4,
-						Color: "#000000",
-					},
+					X:           10,
+					Y:           10,
+					Width:       580,
+					FontFamily:  Impact,
+					FontSize:    40,
+					FontColor:   color.White,
+					StrokeSize:  pointer.GetIntP(4),
+					StrokeColor: pointer.GetStringP(color.Black),
 				},
 				{
-					X:     10,
-					Y:     421,
-					Width: 580,
-					Font: Font{
-						Family: "Impact",
-						Size:   40,
-						Color:  "#FFFFFF",
-					},
-					Stroke: &Stroke{
-						Size:  4,
-						Color: "#000000",
-					},
+					X:           10,
+					Y:           421,
+					Width:       580,
+					FontFamily:  Impact,
+					FontSize:    40,
+					FontColor:   color.White,
+					StrokeSize:  pointer.GetIntP(4),
+					StrokeColor: pointer.GetStringP(color.Black),
 				},
 			},
 			DefaultText: []string{"Y'all Got Any More of Them", "Something"},
 		},
 		"two-buttons": {
 			ID:        "two-buttons",
-			Slug:      "yall-got-any-more-of-them",
 			Name:      "Two Buttons",
-			NSFW:      false,
 			CreatedOn: time.Now(),
-			UserID:    uuid.NewString(),
-			Image: Image{
-				ID:     "two-buttons",
-				Width:  500,
-				Height: 756,
-			},
+			ImageID:   "two-buttons",
 			TextStyles: []TextStyle{
 				{
-					X:     80,
-					Y:     110,
-					Width: 100,
-					Font: Font{
-						Family: "Arial",
-						Size:   20,
-						Color:  "#000000",
-					},
-					Rotation: &Rotation{
-						Degrees: -10,
-					},
+					X:          80,
+					Y:          110,
+					Width:      100,
+					FontFamily: Arial,
+					FontSize:   20,
+					FontColor:  color.Black,
+					Rotation:   pointer.GetIntP(-10),
 				},
 				{
-					X:     245,
-					Y:     80,
-					Width: 100,
-					Font: Font{
-						Family: "Arial",
-						Size:   20,
-						Color:  "#000000",
-					},
-					Rotation: &Rotation{
-						Degrees: -10,
-					},
+					X:          245,
+					Y:          80,
+					Width:      100,
+					FontFamily: Arial,
+					FontSize:   20,
+					FontColor:  color.Black,
+					Rotation:   pointer.GetIntP(-10),
 				},
 				{
-					X:     20,
-					Y:     675,
-					Width: 460,
-					Font: Font{
-						Family: "Impact",
-						Size:   40,
-						Color:  "#FFFFFF",
-					},
-					Stroke: &Stroke{
-						Size:  4,
-						Color: "#000000",
-					},
+					X:           20,
+					Y:           675,
+					Width:       460,
+					FontFamily:  Impact,
+					FontSize:    40,
+					FontColor:   color.Black,
+					StrokeSize:  pointer.GetIntP(4),
+					StrokeColor: pointer.GetStringP(color.Black),
 				},
 			},
 			DefaultText: []string{"Option 1", "Option 2", "Person Deciding"},

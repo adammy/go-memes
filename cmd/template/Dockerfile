@@ -30,7 +30,7 @@ COPY . .
 RUN go mod download
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -ldflags="-w -s" -o /memepen-template-svc cmd/template/server.go
+    go build -ldflags="-w -s" -o /memepen-template-svc cmd/template/main.go
 
 ############################
 # STEP 2 build a small image

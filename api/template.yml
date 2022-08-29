@@ -1,0 +1,240 @@
+openapi: 3.0.3
+
+info:
+  title: Template Service
+  description: The Template Service provides operations for getting, creating, and deleting templates.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/v1
+  - url: https://template.api.memepen.com/v1
+
+paths:
+  /templates/{templateID}:
+    get:
+      operationId: getTemplate
+      summary: Get Template
+      description: GetTemplate retrieves the requested Template.
+      tags:
+        - Template
+      parameters:
+        - in: path
+          name: templateID
+          required: true
+          schema:
+            type: string
+            description: TemplateID is the ID of the requested Template.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      operationId: updateTemplate
+      summary: Update Template
+      description: UpdateTemplate updates the requested Template.
+      tags:
+        - Template
+      parameters:
+        - in: path
+          name: templateID
+          required: true
+          schema:
+            type: string
+            description: TemplateID is the ID of the requested Template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplate'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      operationId: deleteTemplate
+      summary: Delete Template
+      description: DeleteTemplate deletes the requested Template.
+      tags:
+        - Template
+      parameters:
+        - in: path
+          name: templateID
+          required: true
+          schema:
+            type: string
+            description: TemplateID is the ID of the requested Template.
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /templates:
+    post:
+      operationId: createTemplate
+      summary: Create Template
+      description: CreateTemplate creates a new Template.
+      tags:
+        - Template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplate'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+
+components:
+  schemas:
+    Template:
+      type: object
+      description: Template defines a structure for creating a Meme.
+      required:
+        - id
+        - name
+        - createdOn
+        - imageId
+        - textStyles
+        - defaultText
+      properties:
+        id:
+          type: string
+          description: ID is a unique identifier for the Template.
+          format: uuid
+          x-go-name: ID
+          x-go-type: string
+        name:
+          type: string
+          description: Name is a user-friendly name for the Template.
+        createdOn:
+          type: string
+          description: CreatedOn defines the date/time the Template was created.
+          format: date-time
+        imageId:
+          type: string
+          description: ImageID is the unique identifier of the base image used for the Template.
+          format: uuid
+          x-go-name: ImageID
+          x-go-type: string
+        textStyles:
+          type: array
+          description: TextStyles is the text field styling for this Template.
+          items:
+            $ref: '#/components/schemas/TextStyle'
+        defaultText:
+          type: array
+          description: DefaultText is the text used to display Meme usage.
+          items:
+            type: string
+    CreateTemplate:
+      type: object
+      description: CreateTemplate defines a structure for creating a Template.
+      required:
+        - name
+        - imageId
+        - textStyles
+        - defaultText
+      properties:
+        name:
+          type: string
+          description: Name is a user-friendly name for the Template.
+        imageId:
+          type: string
+          description: ID is the unique identifier of the base image used for the Template.
+          format: uuid
+          x-go-name: ImageID
+          x-go-type: string
+        textStyles:
+          type: array
+          description: TextStyles is the text field styling for this Template.
+          items:
+            $ref: '#/components/schemas/TextStyle'
+        defaultText:
+          type: array
+          description: DefaultText is the text used to display Meme usage.
+          items:
+            type: string
+    TextStyle:
+      type: object
+      description: TextStyle defines styling and positioning for text.
+      required:
+        - x
+        - 'y'
+        - width
+        - fontFamily
+        - fontSize
+        - fontColor
+      properties:
+        x:
+          type: integer
+          description: X is the x-axis value representing the top-left of a text field.
+          minimum: 0
+          maximum: 2000
+        'y':
+          type: integer
+          description: Y is the y-axis value representing the top-left of a text field.
+          minimum: 0
+          maximum: 2000
+        width:
+          type: integer
+          description: Width is the width of the text field.
+          minimum: 1
+          maximum: 2000
+        fontFamily:
+          type: string
+          description: FontFamily defines the font family (e.g., "Helvetica").
+          enum:
+            - Arial
+            - Comic Sans
+            - Impact
+        fontSize:
+          type: integer
+          description: FontSize defines the font size in point values.
+          minimum: 1
+          maximum: 300
+        fontColor:
+          type: string
+          description: FontColor defines the color of the text in hexadecimal (e.g., "#FFFFFF").
+          pattern: '^#(?:[0-9A-F]{6})$'
+        strokeSize:
+          type: integer
+          description: StrokeSize defines the size of the text stroke.
+          minimum: 1
+          maximum: 20
+        strokeColor:
+          type: string
+          description: StrokeColor defines the color of the text stroke in hexadecimal (e.g., "#FFFFFF").
+          pattern: '^#(?:[0-9A-F]{6})$'
+        rotation:
+          type: integer
+          description: Rotation defines the number of degrees to rotate the text.
+          minimum: -359
+          maximum: 359

@@ -48,11 +48,10 @@ linters-settings:
     ignore-names:
       - tc
       - x
-      - y
+      - "y"
       - i
       - id
       - dc
       - fn
-    ignore-decls:
-      - x int
-      - y int
+      - w
+      - r
